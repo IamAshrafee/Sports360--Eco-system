@@ -6,3 +6,18 @@ export {
   type MigrationResult,
 } from "./migrations.js"
 export { withTenantContext, type TenantContextInput } from "./tenant-context.js"
+export {
+  ConfigurationPersistenceError,
+  createActivity,
+  createOffering,
+  createResource,
+  getOffering,
+  listActivities,
+  listOfferings,
+  listResources,
+  updateActivity,
+  updateOffering,
+  updateResource,
+  type ConfigurationErrorCode,
+  type ConfigurationPage,
+} from "./configuration.js"

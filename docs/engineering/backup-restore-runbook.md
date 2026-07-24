@@ -25,7 +25,7 @@ not be claimed until the production provider is configured.
 With the local infrastructure healthy, run:
 
 ```sh
-corepack pnpm backup:local
+./scripts/pnpmw backup:local
 ```
 
 This writes a PostgreSQL custom-format archive to
@@ -38,7 +38,7 @@ copy environment-specific role assignments.
 Run:
 
 ```sh
-corepack pnpm restore:drill
+./scripts/pnpmw restore:drill
 ```
 
 The drill:

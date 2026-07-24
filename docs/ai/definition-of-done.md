@@ -10,7 +10,7 @@ claim.
 
 - Scope traces to an approved requirement or explicitly approved correction.
 - Type, lint, unit-test, and formatting checks pass with
-  `corepack pnpm ai:verify`.
+  `./scripts/pnpmw ai:verify`.
 - New behavior has tests at the cheapest reliable layer.
 - Error paths, permissions, tenant scope, and accessibility were considered.
 - No unrelated user changes were overwritten or staged.
@@ -34,7 +34,7 @@ claim.
 With local PostgreSQL and Valkey available:
 
 ```sh
-corepack pnpm ai:verify:full
+./scripts/pnpmw ai:verify:full
 ```
 
 This must cover generation, static/unit checks, migrations, seeds, integration

@@ -6,130 +6,152 @@ Updated: 2026-07-24
 
 ## Outcome
 
-Phase 4 remains complete. Phase 5 planning is active, while Phases 6–8 are
-planned and gated by sequential exit conditions. No Phase 5+ application
-behavior has been implemented.
+Phase 5 implementation is active and P5-01 Configuration Core is implemented
+and verified. An authenticated Owner or venue-scoped Manager can manage
+tenant-owned activities, independent resources, and fixed-duration compatible
+offerings through `/v1` and the shadcn-based setup UI.
 
-This task:
+PostgreSQL enforces tenant, venue, permission, lifecycle, and relationship
+boundaries. OpenAPI and the generated TypeScript client are current. Schedules,
+prices, availability, bookings, customers, payments, Today, reports, and
+public booking remain deliberately unimplemented.
 
-- installed the exact Vercel React Best Practices and Systematic Debugging
-  public skills for newly started agent tasks;
-- added the human guide for assigning, supervising, and accepting agent work;
-- created the all-phase delivery index and shared entry/exit controls;
-- created the Phase 5 master delivery plan;
-- created an implementation-ready P5-01 Configuration Core task brief;
-- created the Phase 6 customer-booking/pilot-SaaS plan and P6-01 public
-  catalogue task brief;
-- created the Phase 7 deterministic simulated-pilot plan and P7-01 harness task
-  brief;
-- created the Phase 8 organic-beta/commercial-evidence plan and P8-01 readiness
-  review task brief;
-- reconciled the documented API base path to the executable `/v1` boundary.
+The local toolchain entry is also stabilized. `./scripts/pnpmw` now activates
+the exact `.node-version` through NVM when agent or non-interactive shells
+select Homebrew Node.js 26. `project:doctor` validates version declarations,
+dependency links, the generated client build, and optional local
+infrastructure before development continues.
 
 ## Files
 
-- `docs/planning/all-phase-delivery-index.md` — status, continuation, entry, and
-  exit controls for Phases 0–8.
-- `docs/planning/phase-5-delivery-plan.md` and `phase-5/` — active Phase 5 plan
-  and first task.
-- `docs/planning/phase-6-delivery-plan.md` and `phase-6/` — gated
-  customer-booking/pilot-SaaS plan and first task.
-- `docs/planning/phase-7-delivery-plan.md` and `phase-7/` — gated simulated
-  pilot plan and first task.
-- `docs/planning/phase-8-delivery-plan.md` and `phase-8/` — gated organic-beta
-  plan and first review task.
-- `docs/ai/human-agent-task-guide.md` — human instructions and assignment
-  patterns for safe agent work.
-- `docs/ai/public-skills-policy.md` — installed-skill decisions and repository
-  overrides.
-- `docs/ai/current-state.md`, `docs/ai/context-map.md`, this handoff, the
-  roadmap, and documentation indexes — reconciled navigation and state.
+- `packages/persistence/migrations/005_configuration_core.sql` and
+  `006_configuration_invariant_hardening.sql` — schema, composite
+  relationships, RLS, grants, and deferred active-offering checks.
+- `packages/persistence/src/configuration.ts` and
+  `configuration.integration.test.ts` — tenant-scoped repository operations
+  and real PostgreSQL proof.
+- `packages/contracts/src/configuration.ts` and
+  `packages/domain/src/configuration.ts` — runtime contracts and pure
+  configuration rules.
+- `apps/api/src/configuration-service.ts` and `configuration-routes.ts` —
+  authorization orchestration and `/v1` HTTP contract.
+- `docs/specification/openapi.json` and
+  `packages/api-client/src/generated/` — generated API artefacts.
+- `apps/web/src/app/setup/`, `apps/web/src/components/`, and
+  `apps/web/src/lib/configuration-api.ts` — setup routes, interactions, and
+  generated-client adapter.
+- `packages/ui/src/components/` — shared alert, input, label, and native-select
+  primitives needed by the workflow.
+- `docs/engineering/phase-5-configuration-core.md` — implementation decisions,
+  evidence, limitations, and continuation.
+- `scripts/pnpmw` and `scripts/project-doctor.mjs` — canonical runtime-aware
+  package-manager entry and actionable environment diagnosis.
+- `AGENTS.md`, the repository skill, README, AI operating guides, engineering
+  runbooks, and phase commands — routed through the wrapper.
+- `.github/workflows/quality.yml` — continuously runs the full project doctor
+  after its exact Node/pnpm installation.
+
+## Decisions
+
+- `resources.activity_id` is authoritative; legacy `activity_code` is retained
+  as a transition seam until a separately reviewed forward retirement
+  migration.
+- Activity codes are stable after creation. Display names and state remain
+  editable.
+- Fixed duration uses a technical integrity bound of `1..1440` minutes.
+- Every resource exposed by P5-01 is one independent allocatable unit.
+- Active offerings require an active activity and at least one same-tenant,
+  same-venue, compatible active resource.
+- Configuration creates rely on exact duplicate constraints rather than adding
+  idempotency-key retention without a demonstrated need.
+- Lists use deterministic UUIDv7 cursor pagination.
+- The generated API client exports compiled JavaScript/declarations; the web
+  does not recompile generated transport source under its stricter TypeScript
+  policy.
+- Setup query parameters are a temporary opaque business/venue context seam,
+  not hard-coded demo identity.
+- Vercel React guidance influenced parallel reads, cancellable loads, minimal
+  client serialization, and server route shells around interactive clients.
+- Systematic Debugging identified an incomplete generated dependency tree;
+  a clean pinned frozen install repaired it without weakening project checks.
+- Browser control confirmed the actual setup shell has no horizontal overflow
+  and retains 44 px controls at 320 CSS px.
+- Node.js remains at `24.18.0` because it is the current LTS line; the
+  numerically newer Node.js 26 line is not yet LTS.
+- Local and agent commands use `./scripts/pnpmw`. The wrapper keeps an
+  already-correct runtime, loads NVM only when needed, never silently installs
+  a runtime, and gives an exact recovery instruction when activation is
+  impossible.
+- CI keeps direct `pnpm` commands because setup actions establish the declared
+  Node and pnpm versions before project scripts run.
+
+## Verification
+
+- Clean pinned `pnpm install --frozen-lockfile --force` — passed, including the
+  runtime preinstall and generated-client postinstall build.
+- `./scripts/pnpmw ai:verify` — passed under Node `24.18.0` / pnpm `11.17.0`:
+  runtime, ESLint, workspace TypeScript, all unit/component/API tests, and
+  formatting.
+- `./scripts/pnpmw ai:verify:full` — passed with healthy PostgreSQL `18.4` and
+  Valkey `9.1`:
+  - OpenAPI/client regeneration;
+  - repeated migration reported the schema already current;
+  - deterministic seed reported current;
+  - authentication and queue integration suites;
+  - two persistence integration files with 21 passing tests;
+  - production builds for web, API, worker, and shared packages.
+- Browser smoke check at 320 × 800 CSS px — passed: page and body width stayed
+  at 320 px; setup links, inputs, and primary action measured 44 px high.
+- Local Markdown links in the changed documentation files — resolved.
+- Prettier check for changed documentation and `git diff --check` — passed.
+- `./scripts/pnpmw ai:handoff` — produced the expected branch, HEAD,
+  working-tree, and unstaged-diff snapshot.
+- Wrong-shell recovery — passed: the caller reported Node.js `26.0.0`, while
+  `./scripts/pnpmw --version` selected Node.js `24.18.0` and pnpm `11.17.0`.
+- Already-correct runtime and missing-NVM failure cases — passed with stable
+  behavior and actionable output.
+- `./scripts/pnpmw install --frozen-lockfile` — passed from the Node.js 26
+  caller environment with the workspace already current.
+- `./scripts/pnpmw project:doctor:full` — passed with zero failures/warnings
+  and healthy PostgreSQL and Valkey.
+- `./scripts/pnpmw ai:verify` — passed from the Node.js 26 caller environment.
 
 ## Repository state
 
 - Branch: `main`
-- HEAD: `609a807 Agent workflow done`
+- HEAD: `7fcac46 Project preparation, documenting by breakdown phases.`
 - `main` matched `origin/main` at task start.
-- The working tree was clean at task start and now contains only the
-  uncommitted planning, AI-guidance, and API-documentation changes described
-  here.
-- `docs/others/` was already tracked and was not modified.
+- The working tree was clean before P5-01 and now contains only the uncommitted
+  P5-01 implementation, its documentation, and the approved toolchain
+  stabilization prerequisite.
+- `docs/others/` was preserved.
+- No files were staged, committed, pushed, or deployed.
 
-## Decisions
+## Risks and limitations
 
-- Use a hybrid skill strategy.
-- Keep project-unique rules in one small repository-local skill.
-- Reuse public skills only for generic expertise after full review.
-- Repository rules, exact versions, and accepted ADRs override public advice.
-- Do not install a popularity bundle or a skill with unresolved command,
-  version, overlap, or audit concerns.
-- Vercel React Best Practices and Systematic Debugging are now installed as
-  only the named directories.
-- Public skills are available to the next agent task, not retroactively relied
-  on for this task.
-- Vercel advice cannot add dependencies, run unpinned package commands, or
-  replace project architecture.
-- Do not run Systematic Debugging's optional `find-polluter.sh` unchanged; it
-  assumes npm and unsafe path splitting for this workspace.
-- Defer the public shadcn, Handoff, Playwright CLI, Web App Testing, and
-  Verification Before Completion skills for the reasons recorded in
-  `docs/ai/public-skills-policy.md`.
-- `/v1` is the canonical API base path because it is the Phase 4 executable
-  OpenAPI boundary.
-- Phase 5 urgent resource blocks remain separate from capacity claims; the
-  unused physical `BLOCK` claim option must not drive block behavior.
-- Completed Phases 0–4 remain evidence records and are not reopened merely to
-  create uniform planning documents.
-- Phase 5 is the only active delivery track. A prepared Phase 6–8 task cannot
-  start until its preceding phase exit gate passes.
-- Phase 7 simulation provides internal technical/operational evidence, not
-  real-customer validation.
-- Phase 8 supports organic or invitation-based adoption without requiring
-  interviews, cold outreach, or owner/staff recruitment.
-- Deployment, purchasing, publication, invitations, real-data onboarding, and
-  payment activation remain separately approvable external actions.
-- Future horizons remain deferred after Phase 8 unless evidence supports a
-  formal promotion decision.
-
-## Verification
-
-- Skill-installer reported successful installation of
-  `$CODEX_HOME/skills/react-best-practices` and
-  `$CODEX_HOME/skills/systematic-debugging`.
-- Installed `SKILL.md` files, bundled resources, executable-command references,
-  and the systematic-debugging shell helper were reviewed; project guards are
-  recorded in `public-skills-policy.md`.
-- Local Markdown links in every changed document were checked and resolved.
-- Prettier check for the changed documentation — passed.
-- `corepack pnpm ai:verify` under Node `24.18.0` / pnpm `11.17.0` — passed:
-  runtime, ESLint, TypeScript, all current unit/component tests, and repository
-  formatting.
-- `git diff --check` — passed.
-- `corepack pnpm ai:verify:full` — not run because this task changes planning
-  and guidance only; it does not change generated contracts, application code,
-  persistence, infrastructure, or production build behavior.
-
-## Risks
-
-- No Phase 5+ product behavior exists yet; these documents must not be reported
-  as implemented software.
-- The planning changes are not committed, so a durable Git checkpoint still
-  depends on user approval.
-- Provider availability, prices, terms, laws, tax/accounting obligations, and
-  Dhaka-region production performance are time-sensitive and must be freshly
-  verified when their gated implementation tasks begin.
-- Phase 8 legal or accounting readiness cannot be self-certified by an agent;
-  any required qualified review remains a real launch condition.
+- The implementation has no durable Git checkpoint until the user requests a
+  commit.
+- Authenticated navigation does not yet provide a first-class business/venue
+  selector; setup accepts opaque IDs for this bounded slice.
+- The web smoke check covers the setup shell at 320 px. Component tests cover
+  form keyboard, association, loading/error/success, permission, and stale
+  states without a live authenticated browser session.
+- Deployment, provider behavior, and measured Dhaka-region production
+  performance remain unverified.
+- `scripts/pnpmw` is a Bash/NVM entry for the current macOS/Linux development
+  and CI model. A future Windows-native development workflow would require an
+  equivalent reviewed entry rather than bypassing runtime checks.
 
 ## Remaining work
 
-1. Create a Git checkpoint if the user requests it.
-2. Implement P5-01 in a fresh agent task using its human assignment prompt.
+1. Create a Git checkpoint only if the user requests it.
+2. Prepare the bounded P5-02 Schedule and Fixed Slots brief.
+3. Implement P5-02 without entering pricing, availability, booking, payment,
+   or public scope.
 
 ## Next action
 
-Start a fresh task with
-`docs/planning/phase-5/P5-01-configuration-core.md`. Do not combine schedules,
-prices, availability, bookings, customers, or payments into that first slice.
-Use `docs/planning/all-phase-delivery-index.md` to preserve the later phase
-gates.
+Start P5-02 by reconciling the schedule/time invariants, workflow
+`US-CFG-003` / `AC-CFG-003`, and the detailed P5-02 gate in
+`docs/planning/phase-5-delivery-plan.md`. Produce an implementation-ready task
+brief before changing schema or code.

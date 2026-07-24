@@ -8,11 +8,11 @@ venue operations, and owner reporting in one multi-tenant SaaS.
 
 ## Current phase
 
-Phase 4 engineering foundation is complete. The repository now includes the
-web/API/worker processes, shared shadcn/ui system, PostgreSQL tenancy and
-authorization, Better Auth phone identity, audit/outbox foundations, generated
-OpenAPI client, observability boundary, and exercised backup/restore tooling.
-Phase 5 staff-side booking core is the next planned phase.
+Phase 4 engineering foundation is complete. Phase 5 implementation is active:
+P5-01 provides tenant-owned activity, independent-resource, and
+fixed-duration offering configuration across PostgreSQL, `/v1`, the generated
+client, and the shadcn-based setup UI. P5-02 schedules and fixed slots is the
+next bounded slice.
 
 Start with the [documentation index](docs/README.md).
 
@@ -37,35 +37,40 @@ Prerequisites:
 
 - Node.js `24.18.0`
 - Corepack (included with the supported Node toolchain)
+- NVM when the shell may select another installed Node.js version
 - Docker Desktop or another Docker Compose-compatible runtime
 
-Before installing, verify the active shell:
+Use the repository wrapper for every project command. It activates `.nvmrc`
+through NVM when a non-interactive shell accidentally selects another Node.js
+installation:
 
 ```bash
-node --version
-corepack pnpm --version
+./scripts/pnpmw project:doctor
 ```
 
-The output must be `v24.18.0` and `11.17.0`. A version manager that reads
-`.node-version` or `.nvmrc` is recommended. Run `nvm use` when using nvm.
-Installation and the complete quality gate fail early when another runtime is
-active.
+The doctor must report Node.js `24.18.0`, pnpm `11.17.0`, healthy dependency
+links, and a built generated client. Local PostgreSQL and Valkey are reported
+separately because they are required only for infrastructure/full gates.
+
+The wrapper requires NVM when the active shell does not already use the
+declared Node.js version. It never installs or silently upgrades a runtime.
 
 ```bash
-corepack pnpm install --frozen-lockfile
-corepack pnpm infra:up
-corepack pnpm api:generate
-corepack pnpm check
-corepack pnpm test:integration
-corepack pnpm build
+./scripts/pnpmw install --frozen-lockfile
+./scripts/pnpmw infra:up
+./scripts/pnpmw project:doctor:full
+./scripts/pnpmw api:generate
+./scripts/pnpmw check
+./scripts/pnpmw test:integration
+./scripts/pnpmw build
 ```
 
 Run each process in a separate terminal:
 
 ```bash
-corepack pnpm dev:web
-corepack pnpm dev:api
-corepack pnpm dev:worker
+./scripts/pnpmw dev:web
+./scripts/pnpmw dev:api
+./scripts/pnpmw dev:worker
 ```
 
 Copy `.env.example` to `.env` when local values need to differ from the safe

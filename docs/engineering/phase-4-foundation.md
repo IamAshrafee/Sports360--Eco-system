@@ -117,7 +117,7 @@ only record of required work.
 ## API-first contract
 
 Fastify generates OpenAPI `3.1` from runtime route schemas. Interactive
-documentation is served under `/v1/docs`. `corepack pnpm api:generate` writes
+documentation is served under `/v1/docs`. `./scripts/pnpmw api:generate` writes
 the committed OpenAPI document and regenerates the standalone TypeScript SDK.
 CI regenerates both and fails on an uncommitted difference.
 
@@ -154,15 +154,15 @@ overwritten.
 The complete gate is:
 
 ```sh
-corepack pnpm infra:up
-corepack pnpm api:generate
-corepack pnpm check
-corepack pnpm db:migrate
-corepack pnpm db:seed
-corepack pnpm test:integration
-corepack pnpm build
-corepack pnpm backup:local
-corepack pnpm restore:drill
+./scripts/pnpmw infra:up
+./scripts/pnpmw api:generate
+./scripts/pnpmw check
+./scripts/pnpmw db:migrate
+./scripts/pnpmw db:seed
+./scripts/pnpmw test:integration
+./scripts/pnpmw build
+./scripts/pnpmw backup:local
+./scripts/pnpmw restore:drill
 ```
 
 The integration suite proves:

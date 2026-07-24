@@ -17,6 +17,7 @@
     "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@sports/api-client": "workspace:*",
     "@sports/ui": "workspace:*",
     "lucide-react": "1.25.0",
     "next": "16.2.11",

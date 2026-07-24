@@ -340,6 +340,8 @@ describe("database security boundary", () => {
       "002_resources_and_capacity.sql",
       "003_qualify_tenant_context.sql",
       "004_security_definer_owner_access.sql",
+      "005_configuration_core.sql",
+      "006_configuration_invariant_hardening.sql",
     ])
   })
 })

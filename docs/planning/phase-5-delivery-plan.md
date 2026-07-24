@@ -1,6 +1,6 @@
 # Phase 5 Staff-Side Booking Core Delivery Plan
 
-Status: Planning active; implementation not started
+Status: Implementation active; P5-01 complete
 
 Last reviewed: 2026-07-24
 
@@ -150,6 +150,9 @@ Exit:
 
 Implementation-ready brief:
 [P5-01 configuration core](phase-5/P5-01-configuration-core.md).
+
+Implementation evidence:
+[Phase 5 configuration core](../engineering/phase-5-configuration-core.md).
 
 ### P5-02 — Schedule and fixed slots
 
@@ -382,6 +385,6 @@ Required evidence:
 
 ## Immediate next action
 
-Implement only
-[P5-01 Configuration Core](phase-5/P5-01-configuration-core.md). Do not start
-booking, public publication, or payment behavior in the same task.
+Prepare and implement only P5-02 Schedule and Fixed Slots. Preserve the P5-01
+configuration boundaries and do not start pricing, availability, booking,
+public publication, or payment behavior in the same task.

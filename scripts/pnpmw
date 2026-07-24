@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+script_directory="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repository_root="$(cd "${script_directory}/.." && pwd)"
+required_node_version="$(
+  tr -d '[:space:]' <"${repository_root}/.node-version"
+)"
+
+active_node_version="$(
+  node --version 2>/dev/null | sed 's/^v//' || true
+)"
+
+if [[ "${active_node_version}" != "${required_node_version}" ]]; then
+  nvm_directory="${NVM_DIR:-${HOME}/.nvm}"
+  nvm_script="${nvm_directory}/nvm.sh"
+
+  if [[ -s "${nvm_script}" ]]; then
+    export NVM_DIR="${nvm_directory}"
+    # NVM is intentionally loaded only when the active runtime is incorrect.
+    # shellcheck disable=SC1090
+    . "${nvm_script}"
+
+    if ! nvm use --silent "${required_node_version}" >/dev/null; then
+      printf '%s\n' \
+        "Node.js ${required_node_version} is required but is not installed in NVM." \
+        "Run: nvm install ${required_node_version}" >&2
+      exit 1
+    fi
+  fi
+fi
+
+active_node_version="$(
+  node --version 2>/dev/null | sed 's/^v//' || true
+)"
+
+if [[ "${active_node_version}" != "${required_node_version}" ]]; then
+  printf '%s\n' \
+    "Unable to activate the project runtime." \
+    "Required Node.js: ${required_node_version}" \
+    "Active Node.js: ${active_node_version:-unavailable}" \
+    "Install NVM with Node.js ${required_node_version}, or activate .node-version before retrying." >&2
+  exit 1
+fi
+
+if ! command -v corepack >/dev/null 2>&1; then
+  printf '%s\n' \
+    "Corepack is unavailable under Node.js ${required_node_version}." \
+    "Install the supported Node.js distribution with Corepack, then retry." >&2
+  exit 1
+fi
+
+cd "${repository_root}"
+exec corepack pnpm "$@"

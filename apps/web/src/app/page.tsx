@@ -1,4 +1,5 @@
 import { ArrowRight, CalendarDays, MapPin, ShieldCheck } from "lucide-react"
+import Link from "next/link"
 
 import { Badge } from "@sports/ui/components/badge"
 import { Button } from "@sports/ui/components/button"
@@ -44,7 +45,7 @@ export default function HomePage() {
             Engineering foundation
           </p>
         </div>
-        <Badge variant="secondary">Phase 4</Badge>
+        <Badge variant="secondary">Phase 5 active</Badge>
       </nav>
 
       <section className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.2fr_0.8fr]">
@@ -60,8 +61,12 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button size="lg">
-              Foundation active
+            <Button
+              className="min-h-11"
+              render={<Link href="/setup" />}
+              size="lg"
+            >
+              Start venue setup
               <ArrowRight aria-hidden="true" data-icon="inline-end" />
             </Button>
             <Button size="lg" variant="outline">

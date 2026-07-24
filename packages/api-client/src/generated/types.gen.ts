@@ -48,6 +48,912 @@ export type GetV1MeResponses = {
 
 export type GetV1MeResponse = GetV1MeResponses[keyof GetV1MeResponses];
 
+export type ListActivitiesData = {
+    body?: never;
+    headers: {
+        'x-business-id': string;
+    };
+    path?: never;
+    query?: {
+        cursor?: string;
+        limit?: number;
+    };
+    url: '/v1/activities';
+};
+
+export type ListActivitiesErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type ListActivitiesError = ListActivitiesErrors[keyof ListActivitiesErrors];
+
+export type ListActivitiesResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        items: Array<{
+            code: string;
+            createdAt: string;
+            displayName: string;
+            id: string;
+            state: 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            version: number;
+        }>;
+        nextCursor: string | null;
+        requestId: string;
+    };
+};
+
+export type ListActivitiesResponse = ListActivitiesResponses[keyof ListActivitiesResponses];
+
+export type CreateActivityData = {
+    body: {
+        code: string;
+        displayName: string;
+        state?: 'ACTIVE' | 'INACTIVE';
+    };
+    headers: {
+        'x-business-id': string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/activities';
+};
+
+export type CreateActivityErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type CreateActivityError = CreateActivityErrors[keyof CreateActivityErrors];
+
+export type CreateActivityResponses = {
+    /**
+     * Default Response
+     */
+    201: {
+        activity: {
+            code: string;
+            createdAt: string;
+            displayName: string;
+            id: string;
+            state: 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            version: number;
+        };
+        requestId: string;
+    };
+};
+
+export type CreateActivityResponse = CreateActivityResponses[keyof CreateActivityResponses];
+
+export type UpdateActivityData = {
+    body: unknown & {
+        displayName?: string;
+        expectedVersion: number;
+        state?: 'ACTIVE' | 'INACTIVE';
+    };
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        activityId: string;
+    };
+    query?: never;
+    url: '/v1/activities/{activityId}';
+};
+
+export type UpdateActivityErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type UpdateActivityError = UpdateActivityErrors[keyof UpdateActivityErrors];
+
+export type UpdateActivityResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        activity: {
+            code: string;
+            createdAt: string;
+            displayName: string;
+            id: string;
+            state: 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            version: number;
+        };
+        requestId: string;
+    };
+};
+
+export type UpdateActivityResponse = UpdateActivityResponses[keyof UpdateActivityResponses];
+
+export type ListResourcesData = {
+    body?: never;
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        venueId: string;
+    };
+    query?: {
+        cursor?: string;
+        limit?: number;
+    };
+    url: '/v1/venues/{venueId}/resources';
+};
+
+export type ListResourcesErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type ListResourcesError = ListResourcesErrors[keyof ListResourcesErrors];
+
+export type ListResourcesResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        items: Array<{
+            activityId: string;
+            createdAt: string;
+            id: string;
+            name: string;
+            state: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            venueId: string;
+            version: number;
+        }>;
+        nextCursor: string | null;
+        requestId: string;
+    };
+};
+
+export type ListResourcesResponse = ListResourcesResponses[keyof ListResourcesResponses];
+
+export type CreateResourceData = {
+    body: {
+        activityId: string;
+        name: string;
+        state?: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+    };
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        venueId: string;
+    };
+    query?: never;
+    url: '/v1/venues/{venueId}/resources';
+};
+
+export type CreateResourceErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type CreateResourceError = CreateResourceErrors[keyof CreateResourceErrors];
+
+export type CreateResourceResponses = {
+    /**
+     * Default Response
+     */
+    201: {
+        resource: {
+            activityId: string;
+            createdAt: string;
+            id: string;
+            name: string;
+            state: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            venueId: string;
+            version: number;
+        };
+        requestId: string;
+    };
+};
+
+export type CreateResourceResponse = CreateResourceResponses[keyof CreateResourceResponses];
+
+export type UpdateResourceData = {
+    body: unknown & {
+        activityId?: string;
+        expectedVersion: number;
+        name?: string;
+        state?: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+    };
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        resourceId: string;
+        venueId: string;
+    };
+    query?: never;
+    url: '/v1/venues/{venueId}/resources/{resourceId}';
+};
+
+export type UpdateResourceErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type UpdateResourceError = UpdateResourceErrors[keyof UpdateResourceErrors];
+
+export type UpdateResourceResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        resource: {
+            activityId: string;
+            createdAt: string;
+            id: string;
+            name: string;
+            state: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            venueId: string;
+            version: number;
+        };
+        requestId: string;
+    };
+};
+
+export type UpdateResourceResponse = UpdateResourceResponses[keyof UpdateResourceResponses];
+
+export type ListOfferingsData = {
+    body?: never;
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        venueId: string;
+    };
+    query?: {
+        cursor?: string;
+        limit?: number;
+    };
+    url: '/v1/venues/{venueId}/offerings';
+};
+
+export type ListOfferingsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type ListOfferingsError = ListOfferingsErrors[keyof ListOfferingsErrors];
+
+export type ListOfferingsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        items: Array<{
+            activityId: string;
+            createdAt: string;
+            durationMinutes: number;
+            id: string;
+            name: string;
+            resourceIds: Array<string>;
+            state: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            venueId: string;
+            version: number;
+        }>;
+        nextCursor: string | null;
+        requestId: string;
+    };
+};
+
+export type ListOfferingsResponse = ListOfferingsResponses[keyof ListOfferingsResponses];
+
+export type CreateOfferingData = {
+    body: {
+        activityId: string;
+        durationMinutes: number;
+        name: string;
+        resourceIds: Array<string>;
+        state?: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+    };
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        venueId: string;
+    };
+    query?: never;
+    url: '/v1/venues/{venueId}/offerings';
+};
+
+export type CreateOfferingErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type CreateOfferingError = CreateOfferingErrors[keyof CreateOfferingErrors];
+
+export type CreateOfferingResponses = {
+    /**
+     * Default Response
+     */
+    201: {
+        offering: {
+            activityId: string;
+            createdAt: string;
+            durationMinutes: number;
+            id: string;
+            name: string;
+            resourceIds: Array<string>;
+            state: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            venueId: string;
+            version: number;
+        };
+        requestId: string;
+    };
+};
+
+export type CreateOfferingResponse = CreateOfferingResponses[keyof CreateOfferingResponses];
+
+export type GetOfferingData = {
+    body?: never;
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        offeringId: string;
+        venueId: string;
+    };
+    query?: never;
+    url: '/v1/venues/{venueId}/offerings/{offeringId}';
+};
+
+export type GetOfferingErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type GetOfferingError = GetOfferingErrors[keyof GetOfferingErrors];
+
+export type GetOfferingResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        offering: {
+            activityId: string;
+            createdAt: string;
+            durationMinutes: number;
+            id: string;
+            name: string;
+            resourceIds: Array<string>;
+            state: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            venueId: string;
+            version: number;
+        };
+        requestId: string;
+    };
+};
+
+export type GetOfferingResponse = GetOfferingResponses[keyof GetOfferingResponses];
+
+export type UpdateOfferingData = {
+    body: unknown & {
+        activityId?: string;
+        durationMinutes?: number;
+        name?: string;
+        resourceIds?: Array<string>;
+        state?: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+        expectedVersion: number;
+    };
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        offeringId: string;
+        venueId: string;
+    };
+    query?: never;
+    url: '/v1/venues/{venueId}/offerings/{offeringId}';
+};
+
+export type UpdateOfferingErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type UpdateOfferingError = UpdateOfferingErrors[keyof UpdateOfferingErrors];
+
+export type UpdateOfferingResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        offering: {
+            activityId: string;
+            createdAt: string;
+            durationMinutes: number;
+            id: string;
+            name: string;
+            resourceIds: Array<string>;
+            state: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+            updatedAt: string;
+            venueId: string;
+            version: number;
+        };
+        requestId: string;
+    };
+};
+
+export type UpdateOfferingResponse = UpdateOfferingResponses[keyof UpdateOfferingResponses];
+
 export type GetV1HealthLiveData = {
     body?: never;
     path?: never;

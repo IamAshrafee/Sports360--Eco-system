@@ -16,16 +16,23 @@ import {
   type AuthRouteDependencies,
 } from "./auth-routes.js"
 import type { ApiConfig } from "./config.js"
+import {
+  createConfigurationRouteDependencies,
+  registerConfigurationRoutes,
+  type ConfigurationRouteDependencies,
+} from "./configuration-routes.js"
 
 export interface BuildAppOptions {
   config: ApiConfig
   auth?: AuthRouteDependencies
+  configuration?: ConfigurationRouteDependencies
   logger?: FastifyServerOptions["logger"]
   readiness?: () => Promise<void>
 }
 
 export async function buildApp({
   auth,
+  configuration,
   config,
   logger = loggerOptions({ level: config.LOG_LEVEL, service: "api" }),
   readiness,
@@ -72,6 +79,14 @@ export async function buildApp({
 
   if (auth !== undefined) {
     registerAuthRoutes(app, auth)
+  }
+  const configurationDependencies =
+    configuration ??
+    (auth === undefined
+      ? undefined
+      : createConfigurationRouteDependencies(auth.auth, auth.runtimePool))
+  if (configurationDependencies !== undefined) {
+    registerConfigurationRoutes(app, configurationDependencies)
   }
 
   app.get(

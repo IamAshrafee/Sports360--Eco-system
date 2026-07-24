@@ -5,7 +5,7 @@ Status: Active
 ## 1. Orient
 
 - Inspect Git state without modifying it.
-- Run `corepack pnpm ai:context`.
+- Run `./scripts/pnpmw ai:context`.
 - Confirm the current phase and whether the request is implementation,
   diagnosis, review, research, or documentation.
 - Preserve unrelated changes and user-owned files.
@@ -37,8 +37,8 @@ Status: Active
 ## 5. Verify
 
 - Run narrow tests while iterating.
-- Run `corepack pnpm ai:verify` before ordinary completion.
-- Run `corepack pnpm ai:verify:full` when shared contracts, persistence,
+- Run `./scripts/pnpmw ai:verify` before ordinary completion.
+- Run `./scripts/pnpmw ai:verify:full` when shared contracts, persistence,
   infrastructure, build output, or release readiness is affected.
 - Add focused concurrency, security, recovery, or accessibility evidence when
   the change touches those risks.
@@ -58,7 +58,7 @@ Do not rewrite history in the decision log; supersede decisions explicitly.
 
 ## 7. Handoff
 
-Run `corepack pnpm ai:handoff`, then update `docs/ai/handoff.md`. A useful
+Run `./scripts/pnpmw ai:handoff`, then update `docs/ai/handoff.md`. A useful
 handoff contains:
 
 - outcome and exact files changed;

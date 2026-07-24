@@ -15,3 +15,12 @@ export function parseOpaqueId(value: string): OpaqueId {
 
   return value as OpaqueId
 }
+
+export {
+  assertOfferingDuration,
+  ConfigurationRuleError,
+  MAX_OFFERING_DURATION_MINUTES,
+  MIN_OFFERING_DURATION_MINUTES,
+  normalizeActivityCode,
+  uniqueResourceIds,
+} from "./configuration.js"

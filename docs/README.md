@@ -96,6 +96,7 @@ assumption has been validated.
 
 - [Engineering index](engineering/README.md)
 - [Phase 4 foundation record](engineering/phase-4-foundation.md)
+- [Phase 5 configuration-core record](engineering/phase-5-configuration-core.md)
 
 ## AI collaboration and continuity
 

@@ -9,8 +9,9 @@ describe executable repository state, verification, and remaining work.
 ## Records
 
 1. [Phase 4 engineering foundation](phase-4-foundation.md)
-2. [Toolchain and version audit](toolchain-version-audit.md)
-3. [PostgreSQL backup and restore runbook](backup-restore-runbook.md)
+2. [Phase 5 configuration core](phase-5-configuration-core.md)
+3. [Toolchain and version audit](toolchain-version-audit.md)
+4. [PostgreSQL backup and restore runbook](backup-restore-runbook.md)
 
 ## Documentation rule
 

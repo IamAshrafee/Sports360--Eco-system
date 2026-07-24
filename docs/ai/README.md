@@ -26,7 +26,7 @@ project-specific reusable skill lives in
 ## Quick start
 
 ```sh
-corepack pnpm ai:context
+./scripts/pnpmw ai:context
 ```
 
 Then read the documents listed for the task in

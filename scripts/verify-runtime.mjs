@@ -33,7 +33,7 @@ if (errors.length > 0) {
     [
       "Unsupported development runtime.",
       ...errors.map((error) => `- ${error}`),
-      "Activate the versions declared in .node-version and package.json, then retry.",
+      "Run the command through ./scripts/pnpmw so the repository can activate .node-version safely.",
     ].join("\n"),
   )
   process.exitCode = 1

@@ -12,7 +12,7 @@
     "provision:local": "node --import tsx src/cli/provision-local.ts",
     "seed": "node --import tsx src/cli/seed.ts",
     "test": "vitest run --exclude '**/*.integration.test.ts'",
-    "test:integration": "vitest run src/security.integration.test.ts",
+    "test:integration": "vitest run src/security.integration.test.ts src/configuration.integration.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

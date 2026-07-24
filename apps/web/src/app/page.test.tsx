@@ -12,6 +12,9 @@ describe("HomePage", () => {
         name: "The daily operating system for sports venues.",
       }),
     ).toBeInTheDocument()
-    expect(screen.getByText("Phase 4")).toBeInTheDocument()
+    expect(screen.getByText("Phase 5 active")).toBeInTheDocument()
+    expect(
+      screen.getByRole("link", { name: "Start venue setup" }),
+    ).toHaveAttribute("href", "/setup")
   })
 })

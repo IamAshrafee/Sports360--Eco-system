@@ -71,3 +71,33 @@ export type PlatformPermissionCode = z.infer<
   typeof platformPermissionCodeSchema
 >
 export type ProfileCode = z.infer<typeof profileCodeSchema>
+
+export {
+  activityCodeSchema,
+  activitySchema,
+  activityStateSchema,
+  configurationListQuerySchema,
+  createActivitySchema,
+  createOfferingSchema,
+  createResourceSchema,
+  offeringSchema,
+  offeringStateSchema,
+  resourceSchema,
+  resourceStateSchema,
+  updateActivitySchema,
+  updateOfferingSchema,
+  updateResourceSchema,
+  type Activity,
+  type ActivityState,
+  type ConfigurationListQuery,
+  type CreateActivity,
+  type CreateOffering,
+  type CreateResource,
+  type Offering,
+  type OfferingState,
+  type Resource,
+  type ResourceState,
+  type UpdateActivity,
+  type UpdateOffering,
+  type UpdateResource,
+} from "./configuration.js"

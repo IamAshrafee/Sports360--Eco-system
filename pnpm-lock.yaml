@@ -272,6 +272,15 @@ importers:
       '@sports/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@sports/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@sports/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+      '@sports/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
       '@sports/observability':
         specifier: workspace:*
         version: link:../../packages/observability
@@ -297,6 +306,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@sports/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@sports/ui':
         specifier: workspace:*
         version: link:../../packages/ui

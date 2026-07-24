@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetV1HealthLiveData, GetV1HealthLiveResponses, GetV1HealthReadyData, GetV1HealthReadyErrors, GetV1HealthReadyResponses, GetV1MeData, GetV1MeErrors, GetV1MeResponses } from './types.gen';
+import type { CreateActivityData, CreateActivityErrors, CreateActivityResponses, CreateOfferingData, CreateOfferingErrors, CreateOfferingResponses, CreateResourceData, CreateResourceErrors, CreateResourceResponses, GetOfferingData, GetOfferingErrors, GetOfferingResponses, GetV1HealthLiveData, GetV1HealthLiveResponses, GetV1HealthReadyData, GetV1HealthReadyErrors, GetV1HealthReadyResponses, GetV1MeData, GetV1MeErrors, GetV1MeResponses, ListActivitiesData, ListActivitiesErrors, ListActivitiesResponses, ListOfferingsData, ListOfferingsErrors, ListOfferingsResponses, ListResourcesData, ListResourcesErrors, ListResourcesResponses, UpdateActivityData, UpdateActivityErrors, UpdateActivityResponses, UpdateOfferingData, UpdateOfferingErrors, UpdateOfferingResponses, UpdateResourceData, UpdateResourceErrors, UpdateResourceResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -22,6 +22,98 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  * Return the authenticated application identity.
  */
 export const getV1Me = <ThrowOnError extends boolean = false>(options?: Options<GetV1MeData, ThrowOnError>): RequestResult<GetV1MeResponses, GetV1MeErrors, ThrowOnError> => (options?.client ?? client).get<GetV1MeResponses, GetV1MeErrors, ThrowOnError>({ url: '/v1/me', ...options });
+
+/**
+ * List tenant-owned activities using cursor pagination.
+ */
+export const listActivities = <ThrowOnError extends boolean = false>(options: Options<ListActivitiesData, ThrowOnError>): RequestResult<ListActivitiesResponses, ListActivitiesErrors, ThrowOnError> => (options.client ?? client).get<ListActivitiesResponses, ListActivitiesErrors, ThrowOnError>({ url: '/v1/activities', ...options });
+
+/**
+ * Create a tenant-owned activity.
+ */
+export const createActivity = <ThrowOnError extends boolean = false>(options: Options<CreateActivityData, ThrowOnError>): RequestResult<CreateActivityResponses, CreateActivityErrors, ThrowOnError> => (options.client ?? client).post<CreateActivityResponses, CreateActivityErrors, ThrowOnError>({
+    url: '/v1/activities',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Edit an activity using optimistic concurrency.
+ */
+export const updateActivity = <ThrowOnError extends boolean = false>(options: Options<UpdateActivityData, ThrowOnError>): RequestResult<UpdateActivityResponses, UpdateActivityErrors, ThrowOnError> => (options.client ?? client).patch<UpdateActivityResponses, UpdateActivityErrors, ThrowOnError>({
+    url: '/v1/activities/{activityId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * List independent resources for an authorized venue.
+ */
+export const listResources = <ThrowOnError extends boolean = false>(options: Options<ListResourcesData, ThrowOnError>): RequestResult<ListResourcesResponses, ListResourcesErrors, ThrowOnError> => (options.client ?? client).get<ListResourcesResponses, ListResourcesErrors, ThrowOnError>({ url: '/v1/venues/{venueId}/resources', ...options });
+
+/**
+ * Create one independent allocatable resource.
+ */
+export const createResource = <ThrowOnError extends boolean = false>(options: Options<CreateResourceData, ThrowOnError>): RequestResult<CreateResourceResponses, CreateResourceErrors, ThrowOnError> => (options.client ?? client).post<CreateResourceResponses, CreateResourceErrors, ThrowOnError>({
+    url: '/v1/venues/{venueId}/resources',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Edit a resource using optimistic concurrency.
+ */
+export const updateResource = <ThrowOnError extends boolean = false>(options: Options<UpdateResourceData, ThrowOnError>): RequestResult<UpdateResourceResponses, UpdateResourceErrors, ThrowOnError> => (options.client ?? client).patch<UpdateResourceResponses, UpdateResourceErrors, ThrowOnError>({
+    url: '/v1/venues/{venueId}/resources/{resourceId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * List offerings and compatible resources for a venue.
+ */
+export const listOfferings = <ThrowOnError extends boolean = false>(options: Options<ListOfferingsData, ThrowOnError>): RequestResult<ListOfferingsResponses, ListOfferingsErrors, ThrowOnError> => (options.client ?? client).get<ListOfferingsResponses, ListOfferingsErrors, ThrowOnError>({ url: '/v1/venues/{venueId}/offerings', ...options });
+
+/**
+ * Create an offering with fixed duration and compatible resources.
+ */
+export const createOffering = <ThrowOnError extends boolean = false>(options: Options<CreateOfferingData, ThrowOnError>): RequestResult<CreateOfferingResponses, CreateOfferingErrors, ThrowOnError> => (options.client ?? client).post<CreateOfferingResponses, CreateOfferingErrors, ThrowOnError>({
+    url: '/v1/venues/{venueId}/offerings',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get one non-enumerating offering detail.
+ */
+export const getOffering = <ThrowOnError extends boolean = false>(options: Options<GetOfferingData, ThrowOnError>): RequestResult<GetOfferingResponses, GetOfferingErrors, ThrowOnError> => (options.client ?? client).get<GetOfferingResponses, GetOfferingErrors, ThrowOnError>({ url: '/v1/venues/{venueId}/offerings/{offeringId}', ...options });
+
+/**
+ * Edit an offering using optimistic concurrency.
+ */
+export const updateOffering = <ThrowOnError extends boolean = false>(options: Options<UpdateOfferingData, ThrowOnError>): RequestResult<UpdateOfferingResponses, UpdateOfferingErrors, ThrowOnError> => (options.client ?? client).patch<UpdateOfferingResponses, UpdateOfferingErrors, ThrowOnError>({
+    url: '/v1/venues/{venueId}/offerings/{offeringId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Process liveness check.

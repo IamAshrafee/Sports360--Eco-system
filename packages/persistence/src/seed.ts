@@ -3,6 +3,8 @@ import type { Pool } from "pg"
 export const demoIds = {
   businessA: "019b7000-0000-7000-8000-000000000001",
   businessB: "019b7000-0000-7000-8000-000000000002",
+  offeringA: "019b7000-0000-7000-8000-000000000501",
+  offeringB: "019b7000-0000-7000-8000-000000000502",
   membershipA: "019b7000-0000-7000-8000-000000000101",
   membershipB: "019b7000-0000-7000-8000-000000000102",
   resourceA: "019b7000-0000-7000-8000-000000000301",
@@ -114,16 +116,41 @@ export async function seedDemoData(pool: Pool): Promise<void> {
 
     await client.query(
       `
+        INSERT INTO app.activities (business_id, code, display_name, state)
+        VALUES
+          ($1, 'football', 'Football', 'ACTIVE'),
+          ($2, 'badminton', 'Badminton', 'ACTIVE')
+        ON CONFLICT (business_id, code) DO UPDATE SET
+          display_name = EXCLUDED.display_name,
+          state = EXCLUDED.state,
+          updated_at = clock_timestamp()
+      `,
+      [demoIds.businessA, demoIds.businessB],
+    )
+
+    await client.query(
+      `
         INSERT INTO app.resources (
-          id, business_id, venue_id, name, activity_code, capacity, state
+          id, business_id, venue_id, name, activity_code, activity_id,
+          capacity, state
         )
         VALUES
-          ($1, $2, $3, 'Football Turf 1', 'football', 1, 'ACTIVE'),
-          ($4, $5, $6, 'Badminton Court 1', 'badminton', 1, 'ACTIVE')
+          (
+            $1, $2, $3, 'Football Turf 1', 'football',
+            (SELECT id FROM app.activities WHERE business_id = $2 AND code = 'football'),
+            1, 'ACTIVE'
+          ),
+          (
+            $4, $5, $6, 'Badminton Court 1', 'badminton',
+            (SELECT id FROM app.activities WHERE business_id = $5 AND code = 'badminton'),
+            1, 'ACTIVE'
+          )
         ON CONFLICT (business_id, id) DO UPDATE SET
           name = EXCLUDED.name,
           activity_code = EXCLUDED.activity_code,
+          activity_id = EXCLUDED.activity_id,
           capacity = EXCLUDED.capacity,
+          state = EXCLUDED.state,
           updated_at = clock_timestamp()
       `,
       [
@@ -133,6 +160,67 @@ export async function seedDemoData(pool: Pool): Promise<void> {
         demoIds.resourceB,
         demoIds.businessB,
         demoIds.venueB,
+      ],
+    )
+
+    await client.query(
+      `
+        INSERT INTO app.offerings (
+          id, business_id, venue_id, activity_id, name, duration_minutes, state
+        )
+        VALUES
+          (
+            $1, $2, $3,
+            (SELECT id FROM app.activities WHERE business_id = $2 AND code = 'football'),
+            'Football — 60 minutes', 60, 'ACTIVE'
+          ),
+          (
+            $4, $5, $6,
+            (SELECT id FROM app.activities WHERE business_id = $5 AND code = 'badminton'),
+            'Badminton — 60 minutes', 60, 'ACTIVE'
+          )
+        ON CONFLICT (business_id, id) DO UPDATE SET
+          activity_id = EXCLUDED.activity_id,
+          name = EXCLUDED.name,
+          duration_minutes = EXCLUDED.duration_minutes,
+          state = EXCLUDED.state,
+          updated_at = clock_timestamp()
+      `,
+      [
+        demoIds.offeringA,
+        demoIds.businessA,
+        demoIds.venueA,
+        demoIds.offeringB,
+        demoIds.businessB,
+        demoIds.venueB,
+      ],
+    )
+
+    await client.query(
+      `
+        INSERT INTO app.offering_resources (
+          business_id, venue_id, offering_id, resource_id, activity_id
+        )
+        SELECT
+          offerings.business_id,
+          offerings.venue_id,
+          offerings.id,
+          resources.id,
+          offerings.activity_id
+        FROM app.offerings offerings
+        JOIN app.resources resources
+          ON resources.business_id = offerings.business_id
+          AND resources.venue_id = offerings.venue_id
+          AND resources.activity_id = offerings.activity_id
+        WHERE offerings.id IN ($1, $2)
+          AND resources.id IN ($3, $4)
+        ON CONFLICT DO NOTHING
+      `,
+      [
+        demoIds.offeringA,
+        demoIds.offeringB,
+        demoIds.resourceA,
+        demoIds.resourceB,
       ],
     )
 

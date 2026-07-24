@@ -22,7 +22,7 @@ Reconcile meaningful disagreements instead of silently choosing one.
 ## Start every task
 
 1. Inspect `git status` and preserve unrelated or user-owned changes.
-2. Run `corepack pnpm ai:context`.
+2. Run `./scripts/pnpmw ai:context`.
 3. Read only the sources routed by
    [docs/ai/context-map.md](docs/ai/context-map.md).
 4. State whether the task belongs to the current phase, a prerequisite, or a
@@ -80,8 +80,8 @@ guide compatibility decisions; they are not current implementation scope.
 Use the narrow checks while iterating, then fresh completion evidence:
 
 ```sh
-corepack pnpm ai:verify
-corepack pnpm ai:verify:full
+./scripts/pnpmw ai:verify
+./scripts/pnpmw ai:verify:full
 ```
 
 The full gate requires local infrastructure. See
@@ -100,7 +100,7 @@ popularity as the only trust signal.
 
 ## Finish every material task
 
-Run `corepack pnpm ai:handoff` and update
+Run `./scripts/pnpmw ai:handoff` and update
 [docs/ai/handoff.md](docs/ai/handoff.md) with the outcome, evidence, remaining
 work, decisions, risks, and exact next step. The final response must distinguish
 implemented, verified, deferred, and unverified work.

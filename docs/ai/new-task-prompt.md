@@ -5,7 +5,7 @@ Use this when starting a new Codex task or another compatible coding agent:
 ```text
 Continue the Sports Venue Management SaaS in this repository.
 
-First read AGENTS.md and run `corepack pnpm ai:context`. Then use
+First read AGENTS.md and run `./scripts/pnpmw ai:context`. Then use
 docs/ai/context-map.md to load only the relevant source-of-truth documents.
 Treat docs/ai/current-state.md and actual Git/test evidence as the current
 checkpoint. Preserve unrelated changes and docs/others/.

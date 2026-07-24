@@ -64,6 +64,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Verify project toolchain
+        run: pnpm project:doctor:full
+
       - name: Verify generated API contract
         run: |
           pnpm api:generate

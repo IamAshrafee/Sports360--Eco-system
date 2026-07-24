@@ -26,7 +26,7 @@ The agent owns:
 - recording an honest handoff.
 
 The human does not need to repeat the project history in every prompt. The
-agent must read `AGENTS.md`, run `corepack pnpm ai:context`, and use the
+agent must read `AGENTS.md`, run `./scripts/pnpmw ai:context`, and use the
 repository context map.
 
 ## The task-assignment cycle
@@ -263,7 +263,7 @@ Before creating a Git checkpoint:
 - [ ] No secret, OTP, token, personal data, or production credential is added.
 - [ ] Applied migrations were not edited.
 - [ ] Required generated files are updated.
-- [ ] `corepack pnpm ai:verify` passed.
+- [ ] `./scripts/pnpmw ai:verify` passed.
 - [ ] Any required PostgreSQL/integration/full gate passed.
 - [ ] Manual or external checks that were not run are listed.
 - [ ] `docs/ai/current-state.md` and `docs/ai/handoff.md` are accurate.

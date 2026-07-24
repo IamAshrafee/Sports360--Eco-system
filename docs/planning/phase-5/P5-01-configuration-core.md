@@ -1,8 +1,11 @@
 # P5-01 Configuration Core
 
-Status: Implementation-ready task brief
+Status: Implemented and verified
 
 Phase: 5 — Staff-side booking core
+
+Implementation evidence:
+[Phase 5 configuration core](../../engineering/phase-5-configuration-core.md)
 
 ## Outcome
 
@@ -255,12 +258,12 @@ custom roles.
 Run:
 
 ```sh
-corepack pnpm api:generate
-corepack pnpm ai:verify
-corepack pnpm db:migrate
-corepack pnpm db:seed
-corepack pnpm test:integration
-corepack pnpm build
+./scripts/pnpmw api:generate
+./scripts/pnpmw ai:verify
+./scripts/pnpmw db:migrate
+./scripts/pnpmw db:seed
+./scripts/pnpmw test:integration
+./scripts/pnpmw build
 ```
 
 Then prove:

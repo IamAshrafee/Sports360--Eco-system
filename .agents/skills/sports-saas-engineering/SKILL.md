@@ -13,7 +13,7 @@ high-risk tenant, booking, money, time, API, audit, and job invariants.
 
 1. Locate the repository root containing `AGENTS.md`.
 2. Read `AGENTS.md` completely.
-3. Run `corepack pnpm ai:context`.
+3. Run `./scripts/pnpmw ai:context`.
 4. Read `docs/ai/current-state.md` and `docs/ai/context-map.md`.
 5. Inspect Git state and preserve unrelated or user-owned changes.
 
@@ -63,8 +63,8 @@ pass. Follow the modular-monolith package responsibilities recorded in
    when affected.
 5. Run narrow checks while iterating.
 6. Read `docs/ai/definition-of-done.md`.
-7. Run `corepack pnpm ai:verify`; use `corepack pnpm ai:verify:full` when the
-   documented full-gate triggers apply.
+7. Run `./scripts/pnpmw ai:verify`; use `./scripts/pnpmw ai:verify:full` when
+   the documented full-gate triggers apply.
 
 Report commands as passed only when they completed successfully in the current
 work. Distinguish implemented, verified, deferred, mocked, and unverified.
@@ -72,8 +72,8 @@ work. Distinguish implemented, verified, deferred, mocked, and unverified.
 ## Reconcile and hand off
 
 Update affected source-of-truth documents when a decision, contract, phase,
-workflow, operational rule, or risk changes. Run `corepack pnpm ai:handoff` and
-update `docs/ai/handoff.md` after material work.
+workflow, operational rule, or risk changes. Run `./scripts/pnpmw ai:handoff`
+and update `docs/ai/handoff.md` after material work.
 
 Do not duplicate whole specifications in the handoff. Reference paths and
 record outcome, verification, decisions, risks, remaining work, repository

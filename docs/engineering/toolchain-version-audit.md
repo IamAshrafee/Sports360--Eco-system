@@ -8,8 +8,9 @@ Date: 2026-07-24
 
 The repository is installed correctly and reproducibly after the corrections
 recorded below. The machine has both Node.js 26 and Node.js 24 installed; Node
-26 is first on the default shell path. The project intentionally requires Node
-24.18.0 LTS and now rejects accidental use of Node 26.
+26 is first on some non-interactive command paths. The project intentionally
+requires Node 24.18.0 LTS. The repository wrapper now activates `.nvmrc`
+through NVM before invoking pnpm instead of depending on the caller's PATH.
 
 The project chooses the newest compatible and supportable version, not
 automatically the numerically newest major version.
@@ -24,8 +25,8 @@ automatically the numerically newest major version.
 | React / React DOM | 19.2.8 | Current stable release and supported by Next.js |
 | PostgreSQL | 18.4 | Current supported PostgreSQL release used by local and CI services |
 | Valkey | 9.1.0 | Current stable queue/cache service used by local and CI services |
-| Better Auth | 1.6.23 | Latest mature release accepted by the 24-hour package-age policy |
-| BullMQ | 5.80.9 | Latest mature release accepted when the newer release was under 24 hours old |
+| Better Auth | 1.6.23 | Verified compatible patch; newer patches require the normal age and quality gates |
+| BullMQ | 5.80.9 | Verified compatible patch; newer patches require the normal age and queue gates |
 | Hey API OpenAPI TS | 0.99.0 | Mature generator with explicit TypeScript 6 peer support |
 
 Node.js 26 is a Current release, not the project runtime. `.node-version`,
@@ -37,7 +38,7 @@ hook, CI, and `verify:runtime` all agree on Node.js 24.18.0.
 | Package | Selected | Newer major | Decision |
 |---|---:|---:|---|
 | TypeScript | 6.0.3 | 7.0.2 | Retain 6 because the installed TypeScript ESLint toolchain currently declares support below 6.1 |
-| ESLint | 9.39.5 | 10.7.0 | Retain 9 because the complete Next.js lint plugin graph passes peer checks on ESLint 9 |
+| ESLint | 9.39.5 | 10.7.0 | Retain the already verified major until an isolated ESLint 10 migration passes the complete plugin and quality gates |
 
 These are compatibility decisions, not forgotten upgrades. They should be
 revisited when the complete lint/type ecosystem declares support and the
@@ -82,6 +83,9 @@ versions itself.
 
 Verification results:
 
+- Node.js 26 caller → wrapper-selected Node.js 24.18.0: pass;
+- correct-runtime and missing-NVM wrapper paths: pass;
+- project doctor with PostgreSQL and Valkey: pass with zero warnings;
 - frozen lockfile installation: pass;
 - peer dependency check: pass;
 - complete dependency audit: no known vulnerabilities;
@@ -91,18 +95,27 @@ Verification results:
 - optimized production builds: pass;
 - shadcn CLI workspace resolution: pass.
 
-## Local workstation activation
+## Canonical project entry
 
-Before working, the shell must report:
+Run every project command through:
 
-```text
-node --version
-v24.18.0
-
-corepack pnpm --version
-11.17.0
+```sh
+./scripts/pnpmw project:doctor
 ```
 
-Use the installed version manager to activate `.node-version` or run `nvm use`
-when nvm is installed. Do not continue after the runtime guard reports Node.js
-26 or another version.
+`scripts/pnpmw` reads `.node-version`, keeps an already-correct runtime, or
+loads NVM and activates the exact declared Node.js version. It fails with an
+installation instruction when that version is unavailable and never silently
+installs or upgrades a runtime.
+
+The project doctor verifies:
+
+- the actual Node executable and exact Node/pnpm versions;
+- agreement between `.node-version`, `.nvmrc`, and package engines;
+- lockfile presence and dependency executable links;
+- the compiled generated-client boundary;
+- optional PostgreSQL and Valkey health.
+
+Use `./scripts/pnpmw project:doctor:full` when the task needs local
+infrastructure. CI may use direct `pnpm` because its workflow installs the
+exact declared Node and pnpm versions before any project command.

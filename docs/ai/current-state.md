@@ -13,7 +13,7 @@ Last reviewed: 2026-07-24
 | 2 — Detailed product specification | Complete | Specification catalogue and acceptance criteria |
 | 3 — Domain, data, and architecture | Complete | Architecture hub, ADRs, and gate review |
 | 4 — Engineering foundation | Complete | `docs/engineering/phase-4-foundation.md` |
-| 5 — Staff-side booking core | Planning active | Delivery plan and P5-01 task brief; implementation not started |
+| 5 — Staff-side booking core | Implementation active | P5-01 configuration core implemented and verified; P5-02 is next |
 | 6 — Customer booking and pilot SaaS | Planned; gated | Delivery plan and P6-01 task brief; blocked until Phase 5 exits |
 | 7 — Founder-operated simulated pilot | Planned; gated | Delivery plan and P7-01 task brief; blocked until Phase 6 exits |
 | 8 — Organic beta and commercial evidence | Planned; gated | Delivery plan and P8-01 task brief; blocked until Phase 7 exits |
@@ -26,37 +26,38 @@ implemented.
 ## Repository checkpoint
 
 - Branch when reviewed: `main`
-- Current committed checkpoint: `609a807 Agent workflow done`
+- Current committed checkpoint: `7fcac46 Project preparation, documenting by breakdown phases.`
 - Phase 4 checkpoint: `716c410 Phase 4: Engineering foundation`
-- Relationship at the start of Phase 5 planning: local `main` matched
+- Relationship at the start of P5-01 implementation: local `main` matched
   `origin/main`
 - The AI collaboration foundation and `docs/others/` are tracked.
-- Phase 5 planning documents are being added after `609a807`.
-- No Phase 5 application implementation checkpoint exists yet.
+- P5-01 application/documentation and the canonical runtime-wrapper changes
+  are currently uncommitted after `7fcac46`.
+- No committed Phase 5 application checkpoint exists yet.
 
-Git facts are time-sensitive. Run `corepack pnpm ai:context` before relying on
-this section. Preserve `docs/others/` unless the user puts it in scope.
+Git facts are time-sensitive. Run `./scripts/pnpmw ai:context` before relying
+on this section. Preserve `docs/others/` unless the user puts it in scope.
 
 ## Approved next outcome
 
-Phase 5 delivers the staff-side booking core in this order:
+P5-01 now provides:
 
-1. business, venue, resource, activity, and offering configuration;
-2. schedules, fixed slots, prices, and blocks;
-3. availability and conflict-safe staff booking;
-4. guest and returning customers;
-5. booking lifecycle;
-6. payments, dues, refunds, and reversals;
-7. Today operations;
-8. reporting and reconciliation.
+- tenant-owned activities;
+- one-unit independent venue resources;
+- fixed-duration offerings with compatible resources;
+- Owner/venue-scoped Manager configuration APIs and setup screens;
+- PostgreSQL RLS, tenant/venue constraints, optimistic versions, audit, and
+  active-offering invariants;
+- regenerated OpenAPI and a compiled TypeScript client boundary.
 
-Before implementation, turn this work order into bounded vertical slices
-traced to the Phase 2 workflows, user stories, acceptance criteria, state
-machines, and architecture proof obligations.
+The verified implementation record is
+`docs/engineering/phase-5-configuration-core.md`.
 
-That planning exists in `docs/planning/phase-5-delivery-plan.md`. The first
-implementation-ready slice is
-`docs/planning/phase-5/P5-01-configuration-core.md`.
+The next dependency-safe outcome is P5-02 Schedule and Fixed Slots. First turn
+the detailed P5-02 gate in `docs/planning/phase-5-delivery-plan.md` into a
+bounded task brief, then implement only schedules, exceptions, and fixed-slot
+preview. Pricing, availability, bookings, customers, payments, Today, reports,
+and public booking remain later slices.
 
 The complete phase-control map is
 `docs/planning/all-phase-delivery-index.md`. Phases 6–8 now have gated master
@@ -72,5 +73,7 @@ before their preceding exit gates pass.
 - Bangladesh-specific defaults are permitted; country assumptions must not be
   embedded in core domain types.
 - Public booking belongs to Phase 6. Phase 5 is staff-side operations.
+- Every local human/agent project command uses `./scripts/pnpmw`; direct pnpm
+  remains valid in CI only after the workflow installs the declared runtime.
 - Production providers, deployment, and measured Dhaka-region performance
   remain unverified.

@@ -66,6 +66,7 @@ Read next:
 3. docs/ai/context-map.md
 4. only the task-specific sources routed by the context map
 
-Current delivery boundary: Phase 4 is complete; Phase 5 staff-side booking is
-next. Future briefs guide compatibility and do not authorize scope expansion.
+Current delivery boundary: Phase 5 staff-side booking implementation is active.
+Read docs/ai/current-state.md for the completed slice and exact next action.
+Future briefs guide compatibility and do not authorize scope expansion.
 `)
