@@ -147,7 +147,7 @@ Phase 3 completion record:
 
 ## Phase 4: Engineering foundation
 
-Status: Next
+Status: Complete
 
 Work:
 
@@ -166,6 +166,26 @@ Exit conditions:
 - Environments are reproducible.
 - Backup restoration has been exercised.
 - Sensitive information is absent from logs.
+
+Implementation progress:
+
+- Reproducible Node/pnpm workspace with separate web, API, and worker
+  processes, shared shadcn/ui, validation, quality gates, and CI.
+- PostgreSQL migrations, Better Auth phone identity, tenant memberships,
+  permission profiles, venue scopes, forced RLS, and cross-tenant tests.
+- Append-only audit, separate platform administration, deterministic seeds,
+  transactional outbox, BullMQ/Valkey delivery, crash recovery, and duplicate
+  protection.
+- OpenAPI 3.1 generation and an independently compiled client SDK for future
+  web, mobile, and integration clients.
+- Structured sensitive-data redaction, optional OTLP traces/metrics, local
+  infrastructure health checks, backup tooling, and a successful isolated
+  restore rehearsal.
+
+Completion evidence:
+
+- [Phase 4 engineering foundation](../engineering/phase-4-foundation.md)
+- [Backup and restore runbook](../engineering/backup-restore-runbook.md)
 
 ## Phase 5: Staff-side booking core
 

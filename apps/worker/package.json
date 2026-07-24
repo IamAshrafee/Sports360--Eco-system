@@ -1,0 +1,24 @@
+{
+  "name": "@sports/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "dev": "tsx watch src/worker.ts",
+    "start": "node dist/worker.js",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sports/jobs": "workspace:*",
+    "@sports/observability": "workspace:*",
+    "@sports/persistence": "workspace:*",
+    "bullmq": "5.80.9",
+    "ioredis": "5.11.1",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "tsx": "4.23.1"
+  }
+}

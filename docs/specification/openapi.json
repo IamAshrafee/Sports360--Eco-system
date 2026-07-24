@@ -1,0 +1,294 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "description": "Versioned API for sports venue business management clients and integrations.",
+    "title": "Sports Venue Management API",
+    "version": "0.1.0"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/v1/me": {
+      "get": {
+        "tags": [
+          "identity"
+        ],
+        "description": "Return the authenticated application identity.",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "displayName": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "format": "uuid",
+                          "type": "string"
+                        },
+                        "phoneNumber": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "displayName",
+                        "id",
+                        "phoneNumber"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "requestId",
+                    "user"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "UNAUTHENTICATED"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "USER_INACTIVE"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/health/live": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "description": "Process liveness check.",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "service": {
+                      "type": "string",
+                      "enum": [
+                        "api"
+                      ]
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ok"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "requestId",
+                    "service",
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/health/ready": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "description": "Dependency readiness check.",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "checks": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "database": {
+                          "type": "string",
+                          "enum": [
+                            "ok"
+                          ]
+                        },
+                        "process": {
+                          "type": "string",
+                          "enum": [
+                            "ok"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "database",
+                        "process"
+                      ],
+                      "type": "object"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "service": {
+                      "type": "string",
+                      "enum": [
+                        "api"
+                      ]
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ready"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "checks",
+                    "requestId",
+                    "service",
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "checks": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "database": {
+                          "type": "string",
+                          "enum": [
+                            "unavailable"
+                          ]
+                        },
+                        "process": {
+                          "type": "string",
+                          "enum": [
+                            "ok"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "database",
+                        "process"
+                      ],
+                      "type": "object"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "service": {
+                      "type": "string",
+                      "enum": [
+                        "api"
+                      ]
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "unavailable"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "checks",
+                    "requestId",
+                    "service",
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000"
+    }
+  ]
+}

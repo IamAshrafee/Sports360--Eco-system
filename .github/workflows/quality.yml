@@ -1,0 +1,83 @@
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DATABASE_ADMIN_URL: postgresql://sports_migrator:sports_migrator_local@localhost:5432/sports_management
+      DATABASE_AUTH_URL: postgresql://sports_auth:sports_auth_local@localhost:5432/sports_management?options=-c%20search_path%3Dauth
+      DATABASE_RUNTIME_URL: postgresql://sports_runtime:sports_runtime_local@localhost:5432/sports_management
+      VALKEY_URL: redis://localhost:6379
+    services:
+      postgres:
+        image: postgres:18.4-alpine
+        env:
+          POSTGRES_DB: sports_management
+          POSTGRES_PASSWORD: sports_migrator_local
+          POSTGRES_USER: sports_migrator
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready --username sports_migrator --dbname sports_management"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+      valkey:
+        image: valkey/valkey:9.1.0-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "valkey-cli ping"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify generated API contract
+        run: |
+          pnpm api:generate
+          git diff --exit-code -- docs/specification/openapi.json packages/api-client/src/generated
+
+      - name: Run quality gate
+        run: pnpm check
+
+      - name: Run infrastructure integration gate
+        run: |
+          pnpm db:provision:local
+          pnpm db:migrate
+          pnpm db:seed
+          pnpm test:integration
+
+      - name: Build applications
+        run: pnpm build

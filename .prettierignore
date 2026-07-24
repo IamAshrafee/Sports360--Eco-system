@@ -1,0 +1,9 @@
+.next
+.pnpm-store
+**/next-env.d.ts
+coverage
+docs
+dist
+node_modules
+packages/api-client/src/generated
+pnpm-lock.yaml

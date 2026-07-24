@@ -83,6 +83,11 @@ assumption has been validated.
 - [Phase 3 traceability and gate review](architecture/phase-3-traceability-and-gate-review.md)
 - [Frontend design-system architecture](architecture/frontend-design-system.md)
 
+## Engineering implementation
+
+- [Engineering index](engineering/README.md)
+- [Phase 4 foundation record](engineering/phase-4-foundation.md)
+
 ## How to change the plan
 
 1. Add new evidence to research or validation notes.
