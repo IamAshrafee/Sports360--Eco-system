@@ -53,6 +53,8 @@ assumption has been validated.
 
 - [Market observations](research/market-observations.md)
 - [Solo-founder validation plan](research/solo-founder-validation-plan.md)
+- [Synthetic venue simulations](research/simulations/README.md)
+- [MVP scenario catalogue](research/simulations/mvp-scenario-catalogue.md)
 - [Optional customer interview plan](research/customer-interview-plan.md)
 
 ## How to change the plan

@@ -25,7 +25,7 @@ Exit condition:
 
 ## Phase 1: Solo-founder evidence and scenario design
 
-Status: Next
+Status: In progress
 
 Work:
 
