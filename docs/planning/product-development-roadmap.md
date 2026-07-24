@@ -189,6 +189,13 @@ Completion evidence:
 
 ## Phase 5: Staff-side booking core
 
+Status: Planning active; implementation not started
+
+Detailed work control:
+
+- [Phase 5 delivery plan](phase-5-delivery-plan.md)
+- [First implementation-ready slice: P5-01 Configuration Core](phase-5/P5-01-configuration-core.md)
+
 Work order:
 
 1. Business/venue/resource/activity/offering configuration
@@ -209,6 +216,13 @@ Exit conditions:
 
 ## Phase 6: Customer booking and pilot SaaS
 
+Status: Planned; blocked until the Phase 5 exit gate passes
+
+Detailed work control:
+
+- [Phase 6 delivery plan](phase-6-delivery-plan.md)
+- [First implementation-ready slice: P6-01 Published Public Catalogue](phase-6/P6-01-published-public-catalogue.md)
+
 Work:
 
 1. Public venue booking page
@@ -227,6 +241,13 @@ Exit conditions:
 - Pilot tenant can be safely activated, restricted, and restored.
 
 ## Phase 7: Founder-operated simulated pilot
+
+Status: Planned; blocked until the Phase 6 exit gate passes
+
+Detailed work control:
+
+- [Phase 7 delivery plan](phase-7-delivery-plan.md)
+- [First implementation-ready slice: P7-01 Simulation Harness](phase-7/P7-01-simulation-harness.md)
 
 Work:
 
@@ -248,6 +269,13 @@ Exit conditions:
 - No claim of real customer validation is made.
 
 ## Phase 8: Organic beta and commercial evidence
+
+Status: Planned; blocked until the Phase 7 exit gate passes
+
+Detailed work control:
+
+- [Phase 8 delivery plan](phase-8-delivery-plan.md)
+- [First implementation-ready task: P8-01 Organic-Beta Readiness Gate](phase-8/P8-01-organic-beta-readiness-gate.md)
 
 Sequence:
 

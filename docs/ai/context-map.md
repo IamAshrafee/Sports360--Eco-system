@@ -8,7 +8,7 @@ sources relevant to the task.
 | Task | Primary sources | Add when relevant |
 |---|---|---|
 | Product goal, customer, or scope | `docs/product/product-vision.md`, `docs/product/market-and-ideal-customer.md`, `docs/product/pilot-mvp-scope.md` | `docs/planning/decision-log.md`, `docs/planning/feature-catalogue.md` |
-| Phase sequencing | `docs/planning/product-development-roadmap.md`, `docs/ai/current-state.md` | `docs/future/README.md` |
+| Phase sequencing | `docs/planning/product-development-roadmap.md`, `docs/planning/all-phase-delivery-index.md`, `docs/ai/current-state.md` | the active phase plan; `docs/future/README.md` |
 | Roles and permissions | `docs/product/personas-roles-and-access.md`, identity/setup workflows | tenancy/authorization architecture, ADR-008 |
 | Facilities and sellable configuration | business/facility product model, setup workflows, domain model | logical data model, MVP scenario catalogue |
 | Booking or availability | booking lifecycle, booking/customer workflows, acceptance criteria | state machines, capacity/concurrency design, ADR-005 |
@@ -42,3 +42,7 @@ approved outcome
 
 If a link is absent or contradictory, resolve the specification gap before
 creating a broad implementation.
+
+The same trace-and-gate rule applies to the later plans. Planning documents for
+Phases 6–8 make future continuation predictable; they do not authorize an
+agent to skip the active phase.

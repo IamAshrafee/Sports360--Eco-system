@@ -15,6 +15,8 @@ architecture, and engineering sources in `docs/`.
 - [Definition of done](definition-of-done.md): required completion evidence.
 - [Handoff](handoff.md): the compact continuation record.
 - [New-task prompt](new-task-prompt.md): a reusable prompt for a fresh task.
+- [Human task-assignment guide](human-agent-task-guide.md): how the solo
+  developer should scope, assign, supervise, and accept agent work.
 - [Public-skills policy](public-skills-policy.md): review and adoption rules.
 
 Repository-wide instructions live in [AGENTS.md](../../AGENTS.md). The

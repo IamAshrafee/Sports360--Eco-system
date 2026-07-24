@@ -28,8 +28,8 @@ installed skill before accepting a materially changed upstream version.
 
 | Skill | Decision | Reason |
 |---|---|---|
-| [Vercel React Best Practices](https://www.skills.sh/vercel-labs/agent-skills/vercel-react-best-practices) | Recommended first | Strong fit for Next.js/React performance, recognizable maintainer, and passing listed audits. Project UI/API boundaries still override generic advice. |
-| [Systematic Debugging](https://www.skills.sh/obra/superpowers/systematic-debugging) | Recommended | General evidence-first debugging with little product-specific overlap and passing listed audits. |
+| [Vercel React Best Practices](https://www.skills.sh/vercel-labs/agent-skills/vercel-react-best-practices) | Installed and accepted with project guards | Strong fit for Next.js/React performance, recognizable maintainer, and passing listed audits. Project UI/API boundaries still override generic advice. |
+| [Systematic Debugging](https://www.skills.sh/obra/superpowers/systematic-debugging) | Installed and accepted with project guards | General evidence-first debugging with little product-specific overlap and passing listed audits. |
 | [Supabase PostgreSQL Best Practices](https://www.skills.sh/supabase/agent-skills/supabase-postgres-best-practices) | Optional after full source review | Useful PostgreSQL guidance and passing listed audits, but Supabase-specific assumptions must not enter this plain PostgreSQL/Kysely architecture. |
 | [Handoff](https://www.skills.sh/mattpocock/skills/handoff) | Defer | Passing listed audits and sensible redaction, but it writes temporary handoffs while this project needs a versioned repository handoff. Installing both would duplicate responsibility. |
 | [shadcn](https://www.skills.sh/shadcn/ui/shadcn) | Defer pending adaptation | Relevant and upstream-owned, but its documented `@latest` commands conflict with this repository's exact-version policy, and one listed audit is a warning. |
@@ -53,5 +53,24 @@ record the conflict.
 
 ## Installation record
 
-No public skill has been installed by this review. Exact installation remains
-an explicit, reviewable change rather than an automatic bundle.
+Installed on 2026-07-24 through the Codex skill-installer:
+
+| Skill name | Source | Installed location | Review notes |
+|---|---|---|---|
+| `$vercel-react-best-practices` | `vercel-labs/agent-skills`, `skills/react-best-practices`, `main`; declared version `1.0.0`, MIT | `$CODEX_HOME/skills/react-best-practices` | No bundled executable script. The guide includes optional libraries and one unpinned `npx svgo` example; agents must not add/run these automatically. |
+| `$systematic-debugging` | `obra/superpowers`, `skills/systematic-debugging`, `main` | `$CODEX_HOME/skills/systematic-debugging` | The method is accepted. Its optional `find-polluter.sh` hard-codes `npm` and uses shell word splitting, so do not run it unchanged in this pnpm repository or a path containing spaces. |
+
+Both were installed as only the named skill directory, not their repositories'
+other skills. They are available to newly started agent tasks.
+
+The Vercel skill contributes performance advice, not architecture authority.
+It cannot introduce SWR, LRU caches, `better-all`, Vercel-specific runtime
+assumptions, or a package command without the repository's dependency and
+provider review.
+
+The systematic-debugging skill references companion test-driven-development
+and verification skills that are not installed. Use this repository's
+`definition-of-done.md` and existing test strategy for those responsibilities.
+
+Installed upstream content is not silently updated. Reinstallation or upgrade
+requires a new source and diff review.

@@ -45,7 +45,7 @@ same commands and queries. No adapter directly owns booking rules.
 
 ## Initial HTTP conventions
 
-- Base path: `/api/v1`.
+- Base path: `/v1`, matching the executable Phase 4 OpenAPI boundary.
 - JSON request/response with explicit media/content types.
 - OpenAPI is generated or verified from runtime schemas.
 - Every response has a correlation/request ID.
@@ -81,7 +81,7 @@ identifier, or sensitive payment/contact content.
 
 ## Versioning
 
-1. `/api/v1` marks the major contract family.
+1. `/v1` marks the major contract family.
 2. Additive optional fields do not require a new major.
 3. Removing/renaming fields or changing meaning requires a new major for
    partner/public clients.

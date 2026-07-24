@@ -47,6 +47,15 @@ assumption has been validated.
 - [Open questions](planning/open-questions.md)
 - [Feature catalogue](planning/feature-catalogue.md)
 - [Product development roadmap](planning/product-development-roadmap.md)
+- [All-phase delivery index](planning/all-phase-delivery-index.md)
+- [Phase 5 delivery plan](planning/phase-5-delivery-plan.md)
+- [P5-01 configuration-core task brief](planning/phase-5/P5-01-configuration-core.md)
+- [Phase 6 delivery plan](planning/phase-6-delivery-plan.md)
+- [P6-01 published-public-catalogue task brief](planning/phase-6/P6-01-published-public-catalogue.md)
+- [Phase 7 delivery plan](planning/phase-7-delivery-plan.md)
+- [P7-01 simulation-harness task brief](planning/phase-7/P7-01-simulation-harness.md)
+- [Phase 8 delivery plan](planning/phase-8-delivery-plan.md)
+- [P8-01 organic-beta-readiness task brief](planning/phase-8/P8-01-organic-beta-readiness-gate.md)
 - [Glossary](planning/glossary.md)
 
 ## Research
@@ -95,6 +104,7 @@ assumption has been validated.
 - [Context map](ai/context-map.md)
 - [Definition of done](ai/definition-of-done.md)
 - [Current handoff](ai/handoff.md)
+- [Human guide for assigning work to agentic AI](ai/human-agent-task-guide.md)
 - [Public agent-skills policy](ai/public-skills-policy.md)
 
 ## How to change the plan
