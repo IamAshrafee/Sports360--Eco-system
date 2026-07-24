@@ -101,7 +101,7 @@ Phase 2 completion record:
 
 ## Phase 3: Domain, data, and technical architecture
 
-Status: Next
+Status: Complete
 
 Work:
 
@@ -134,7 +134,19 @@ Exit conditions:
 - Money and time representations are unambiguous.
 - Deployment and recovery approach is feasible for a solo developer.
 
+Phase 3 completion record:
+
+- 12 Architecture Decision Records
+- Domain aggregates, state machines, logical data model, and module contracts
+- PostgreSQL-enforced capacity and defense-in-depth tenant isolation
+- API-first contract strategy for web and post-MVP clients/integrations
+- Authentication, queue, provider, observability, and repository selections
+- Threat model, test strategy, cost envelopes, recovery and provider exits
+- Traceability/gate review with executable Phase 4 proof list
+
 ## Phase 4: Engineering foundation
+
+Status: Next
 
 Work:
 

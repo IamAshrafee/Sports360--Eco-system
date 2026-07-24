@@ -72,6 +72,16 @@ assumption has been validated.
 - [Non-functional requirements](specification/non-functional-requirements.md)
 - [Traceability matrix](specification/traceability-matrix.md)
 
+## Architecture
+
+- [Phase 3 architecture hub](architecture/README.md)
+- [Architecture foundations and decision gates](architecture/architecture-foundations-and-decision-gates.md)
+- [Architecture Decision Records](architecture/adrs/README.md)
+- [API-first and multi-client strategy](architecture/api-first-and-client-strategy.md)
+- [Technology and provider selection](architecture/technology-and-provider-selection.md)
+- [Provider cost, growth, and exit strategy](architecture/provider-cost-and-exit-strategy.md)
+- [Phase 3 traceability and gate review](architecture/phase-3-traceability-and-gate-review.md)
+
 ## How to change the plan
 
 1. Add new evidence to research or validation notes.

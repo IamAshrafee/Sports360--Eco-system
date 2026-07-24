@@ -77,17 +77,18 @@ professional advice.
 - Merchant-of-record and payout implications
 - Incident-data access and retention
 
-## Technical decisions deliberately not made
+## Remaining technical and provider validations
 
-- Frontend framework and application topology
-- Backend framework and API style
-- Database and multi-tenancy implementation
-- Authentication/OTP provider
-- Payment gateway
-- SMS/notification provider
-- Cloud, region, deployment, observability, and backup providers
-- Monorepo/package management strategy
-- Native app strategy
+The main stack, topology, database, tenancy, authentication library, queue,
+cloud shortlist, observability backend, and repository strategy are now
+decided in the Phase 3 ADRs. The following remain open by design:
 
-These should follow detailed workflows, acceptance criteria, data modeling, and
-non-functional requirements.
+- Payment gateway and merchant settlement model
+- Production activation of an SMS provider after multi-operator delivery tests
+- Exact organic-beta infrastructure/availability tier after load and cost tests
+- Paid telemetry retention after real volume measurement
+- Native mobile framework when native client requirements are specified
+- Final DNS/WAF paid tier after tested security needs
+
+These do not block Phase 4 scaffolding because their adapter boundaries,
+activation gates, and fallbacks are documented.
