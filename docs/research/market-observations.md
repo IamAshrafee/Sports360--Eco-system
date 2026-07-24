@@ -6,6 +6,10 @@ Last reviewed: 2026-07-24
 These observations help shape hypotheses. Product/vendor marketing claims are
 not independent proof of market size, adoption, or customer satisfaction.
 
+Detailed sourced findings are maintained in the
+[Public Evidence Register](public-evidence-register.md), with workflow mapping
+in [Competitor Flow Analysis](competitor-flow-analysis.md).
+
 ## Observed local product activity
 
 Several Bangladesh-focused products publicly position themselves around sports

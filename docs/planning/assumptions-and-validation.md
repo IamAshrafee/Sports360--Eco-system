@@ -34,6 +34,27 @@ assumptions until evidence supports them.
 | A-014 | Businesses can obtain merchant arrangements for future gateway use. | Untested | Provider research and organic merchant onboarding | Online payment |
 | A-015 | Basic operational reporting is more valuable initially than advanced accounting. | Untested | Organic report usage and feature requests | MVP reports |
 
+## Desk-evidence update: 2026-07-24
+
+- EV-001 through EV-005 show direct public examples of time-band prices,
+  fixed-duration products, advance/full-payment choices, WhatsApp fallback,
+  cancellation windows, after-midnight slots, field-size options, and
+  multi-location structure.
+- EV-006 through EV-010 show that Bangladesh-facing products repeatedly claim
+  multi-channel booking, OTP/holds, partial/manual payments, dues, blocks,
+  reports, owner dashboards, and marketplace separation.
+- A-001, A-002, and A-006 are therefore Desk-supported.
+- A-005 remains Untested because a few fixed-slot examples do not prove that
+  fixed slots cover the majority of the intended segment.
+- A-008 remains Untested because public competitor pricing is inconsistent and
+  cannot prove customer preference.
+- A-009 remains Untested; bilingual/localized competitor interfaces indicate
+  relevance but not required launch coverage.
+- A-015 remains Untested because competitor emphasis proves category relevance,
+  not that reporting outranks accounting for buyers.
+
+See [Public Evidence Register](../research/public-evidence-register.md).
+
 ## Evidence collection rules
 
 - Record source and access date for public examples.

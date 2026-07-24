@@ -52,6 +52,8 @@ assumption has been validated.
 ## Research
 
 - [Market observations](research/market-observations.md)
+- [Public evidence register](research/public-evidence-register.md)
+- [Competitor flow analysis](research/competitor-flow-analysis.md)
 - [Solo-founder validation plan](research/solo-founder-validation-plan.md)
 - [Synthetic venue simulations](research/simulations/README.md)
 - [MVP scenario catalogue](research/simulations/mvp-scenario-catalogue.md)

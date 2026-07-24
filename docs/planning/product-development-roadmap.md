@@ -25,7 +25,7 @@ Exit condition:
 
 ## Phase 1: Solo-founder evidence and scenario design
 
-Status: In progress
+Status: Complete
 
 Work:
 
@@ -57,6 +57,8 @@ Exit conditions:
 - No direct owner/staff contact is required.
 
 ## Phase 2: Detailed product specification
+
+Status: Next
 
 Work:
 
