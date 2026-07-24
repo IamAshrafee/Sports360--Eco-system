@@ -58,7 +58,7 @@ Exit conditions:
 
 ## Phase 2: Detailed product specification
 
-Status: Next
+Status: Complete
 
 Work:
 
@@ -87,7 +87,21 @@ Exit conditions:
 - Core staff tasks are understandable without explanation.
 - Major error and permission paths are specified.
 
+Phase 2 completion record:
+
+- 26 end-to-end workflows
+- 10 epics and 77 prioritized user stories
+- 110 one-to-one Given/When/Then acceptance criteria
+- 52 role-scoped screens across business, public, and platform surfaces
+- 12 low-fidelity interaction designs
+- 9 founder-operated cognitive walkthroughs
+- 34 transactional notification types with delivery/retry rules
+- Measurable security, reliability, financial, time, performance, recovery,
+  privacy, accessibility, observability, and delivery requirements
+
 ## Phase 3: Domain, data, and technical architecture
+
+Status: Next
 
 Work:
 

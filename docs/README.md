@@ -59,6 +59,19 @@ assumption has been validated.
 - [MVP scenario catalogue](research/simulations/mvp-scenario-catalogue.md)
 - [Optional customer interview plan](research/customer-interview-plan.md)
 
+## MVP specification
+
+- [Phase 2 specification index](specification/README.md)
+- [Workflow catalogue](specification/workflows/README.md)
+- [Epics and user stories](specification/epics-and-user-stories.md)
+- [Acceptance criteria](specification/acceptance-criteria.md)
+- [Screen inventory and navigation](specification/screen-inventory-and-navigation.md)
+- [Low-fidelity interaction designs](specification/low-fidelity-interaction-designs.md)
+- [Scripted cognitive walkthroughs](specification/cognitive-walkthroughs.md)
+- [Notification matrix](specification/notification-matrix.md)
+- [Non-functional requirements](specification/non-functional-requirements.md)
+- [Traceability matrix](specification/traceability-matrix.md)
+
 ## How to change the plan
 
 1. Add new evidence to research or validation notes.
