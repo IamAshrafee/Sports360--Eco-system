@@ -21,3 +21,10 @@ export {
   type ConfigurationErrorCode,
   type ConfigurationPage,
 } from "./configuration.js"
+export {
+  createScheduleVersion,
+  listScheduleVersions,
+  previewFixedSlots,
+  SchedulePersistenceError,
+  type ScheduleErrorCode,
+} from "./schedule.js"

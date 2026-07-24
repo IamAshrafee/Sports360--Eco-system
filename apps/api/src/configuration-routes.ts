@@ -2,7 +2,10 @@ import {
   createActivitySchema,
   createOfferingSchema,
   createResourceSchema,
+  createScheduleVersionSchema,
   configurationListQuerySchema,
+  scheduleListQuerySchema,
+  slotPreviewQuerySchema,
   updateActivitySchema,
   updateOfferingSchema,
   updateResourceSchema,
@@ -13,8 +16,11 @@ import {
   type SportsAuth,
 } from "@sports/auth"
 import { AuthorizationError } from "@sports/authorization"
-import { ConfigurationRuleError } from "@sports/domain"
-import { ConfigurationPersistenceError } from "@sports/persistence"
+import { ConfigurationRuleError, ScheduleRuleError } from "@sports/domain"
+import {
+  ConfigurationPersistenceError,
+  SchedulePersistenceError,
+} from "@sports/persistence"
 import type { FastifyInstance, FastifyRequest, FastifySchema } from "fastify"
 import type { Pool } from "pg"
 import { z, ZodError } from "zod"
@@ -327,6 +333,165 @@ const updateOfferingBodySchema = {
   type: "object",
 } as const
 
+const localDateJsonSchema = { format: "date", type: "string" } as const
+const localTimeJsonSchema = {
+  pattern: "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+  type: "string",
+} as const
+const schedulePeriodResponseSchema = {
+  additionalProperties: false,
+  properties: {
+    closesAt: localTimeJsonSchema,
+    crossesMidnight: { type: "boolean" },
+    opensAt: localTimeJsonSchema,
+  },
+  required: ["closesAt", "crossesMidnight", "opensAt"],
+  type: "object",
+} as const
+const weeklySchedulePeriodResponseSchema = {
+  ...schedulePeriodResponseSchema,
+  properties: {
+    ...schedulePeriodResponseSchema.properties,
+    weekday: { maximum: 7, minimum: 1, type: "integer" },
+  },
+  required: [...schedulePeriodResponseSchema.required, "weekday"],
+} as const
+const scheduleExceptionResponseSchema = {
+  additionalProperties: false,
+  properties: {
+    kind: { enum: ["CLOSED", "REPLACE"], type: "string" },
+    localDate: localDateJsonSchema,
+    periods: {
+      items: schedulePeriodResponseSchema,
+      type: "array",
+    },
+    reason: { maxLength: 240, minLength: 1, type: "string" },
+  },
+  required: ["kind", "localDate", "periods"],
+  type: "object",
+} as const
+const scheduleVersionResponseSchema = {
+  additionalProperties: false,
+  properties: {
+    createdAt: timestampSchema,
+    effectiveFrom: localDateJsonSchema,
+    effectiveUntil: {
+      anyOf: [localDateJsonSchema, { type: "null" }],
+    },
+    exceptions: {
+      items: scheduleExceptionResponseSchema,
+      type: "array",
+    },
+    id: idSchema,
+    resourceId: { anyOf: [idSchema, { type: "null" }] },
+    scope: { enum: ["VENUE", "RESOURCE"], type: "string" },
+    timezone: { maxLength: 120, minLength: 1, type: "string" },
+    venueId: idSchema,
+    version: { minimum: 1, type: "integer" },
+    weeklyPeriods: {
+      items: weeklySchedulePeriodResponseSchema,
+      minItems: 1,
+      type: "array",
+    },
+  },
+  required: [
+    "createdAt",
+    "effectiveFrom",
+    "effectiveUntil",
+    "exceptions",
+    "id",
+    "resourceId",
+    "scope",
+    "timezone",
+    "venueId",
+    "version",
+    "weeklyPeriods",
+  ],
+  type: "object",
+} as const
+const createScheduleVersionBodySchema = {
+  additionalProperties: false,
+  properties: {
+    effectiveFrom: localDateJsonSchema,
+    exceptions: {
+      default: [],
+      items: {
+        ...scheduleExceptionResponseSchema,
+        properties: {
+          ...scheduleExceptionResponseSchema.properties,
+          periods: {
+            default: [],
+            items: schedulePeriodResponseSchema,
+            maxItems: 24,
+            type: "array",
+          },
+        },
+      },
+      maxItems: 366,
+      type: "array",
+    },
+    resourceId: idSchema,
+    weeklyPeriods: {
+      items: weeklySchedulePeriodResponseSchema,
+      maxItems: 56,
+      minItems: 1,
+      type: "array",
+    },
+  },
+  required: ["effectiveFrom", "weeklyPeriods"],
+  type: "object",
+} as const
+const scheduleListQueryJsonSchema = {
+  additionalProperties: false,
+  properties: { resourceId: idSchema },
+  type: "object",
+} as const
+const slotPreviewQueryJsonSchema = {
+  additionalProperties: false,
+  properties: {
+    offeringId: idSchema,
+    operationalDate: localDateJsonSchema,
+    resourceId: idSchema,
+  },
+  required: ["offeringId", "operationalDate", "resourceId"],
+  type: "object",
+} as const
+const generatedSlotResponseSchema = {
+  additionalProperties: false,
+  properties: {
+    endAt: timestampSchema,
+    localEnd: { type: "string" },
+    localStart: { type: "string" },
+    startAt: timestampSchema,
+  },
+  required: ["endAt", "localEnd", "localStart", "startAt"],
+  type: "object",
+} as const
+const slotPreviewResponseSchema = {
+  additionalProperties: false,
+  properties: {
+    offeringDurationMinutes: {
+      maximum: 1440,
+      minimum: 1,
+      type: "integer",
+    },
+    operationalDate: localDateJsonSchema,
+    scheduleScope: { enum: ["VENUE", "RESOURCE"], type: "string" },
+    scheduleVersionId: idSchema,
+    slots: { items: generatedSlotResponseSchema, type: "array" },
+    timezone: { maxLength: 120, minLength: 1, type: "string" },
+  },
+  required: [
+    "offeringDurationMinutes",
+    "operationalDate",
+    "scheduleScope",
+    "scheduleVersionId",
+    "slots",
+    "timezone",
+  ],
+  type: "object",
+} as const
+
 const params = {
   activity: z.object({ activityId: z.uuid() }),
   offering: z.object({ offeringId: z.uuid(), venueId: z.uuid() }),
@@ -375,6 +540,19 @@ function statusForPersistenceError(error: ConfigurationPersistenceError) {
     case "DUPLICATE_CONFIGURATION":
       return 409
     case "INCOMPATIBLE_RELATIONSHIP":
+      return 422
+  }
+}
+
+function statusForSchedulePersistenceError(error: SchedulePersistenceError) {
+  switch (error.code) {
+    case "NOT_FOUND":
+    case "NO_EFFECTIVE_SCHEDULE":
+      return 404
+    case "DUPLICATE_EFFECTIVE_DATE":
+      return 409
+    case "INCOMPATIBLE_RELATIONSHIP":
+    case "INVALID_SCHEDULE":
       return 422
   }
 }
@@ -453,7 +631,18 @@ export function registerConfigurationRoutes(
         requestId: request.id,
       })
     }
-    if (error instanceof ConfigurationRuleError || error instanceof ZodError) {
+    if (error instanceof SchedulePersistenceError) {
+      return reply.status(statusForSchedulePersistenceError(error)).send({
+        code: error.code,
+        message: error.message,
+        requestId: request.id,
+      })
+    }
+    if (
+      error instanceof ConfigurationRuleError ||
+      error instanceof ScheduleRuleError ||
+      error instanceof ZodError
+    ) {
       return reply.status(400).send({
         code: "VALIDATION_ERROR",
         message: "The configuration input is invalid.",
@@ -762,6 +951,114 @@ export function registerConfigurationRoutes(
         input,
       )
       return { offering, requestId: request.id }
+    },
+  )
+
+  app.get(
+    "/v1/venues/:venueId/schedules",
+    {
+      schema: routeSchema({
+        description:
+          "List immutable venue and resource schedule versions for an authorized venue.",
+        headers: headersSchema,
+        operationId: "listScheduleVersions",
+        params: venueParamsSchema,
+        querystring: scheduleListQueryJsonSchema,
+        response: responses({
+          additionalProperties: false,
+          properties: {
+            items: { items: scheduleVersionResponseSchema, type: "array" },
+            requestId: { type: "string" },
+          },
+          required: ["items", "requestId"],
+          type: "object",
+        }),
+        tags: ["configuration"],
+      }),
+    },
+    async (request) => {
+      const context = await commandContext(request, dependencies)
+      const { venueId } = params.venue.parse(request.params)
+      const query = scheduleListQuerySchema.parse(request.query)
+      const items = await dependencies.service.listScheduleVersions(
+        context,
+        venueId,
+        query,
+      )
+      return { items, requestId: request.id }
+    },
+  )
+
+  app.post(
+    "/v1/venues/:venueId/schedules",
+    {
+      schema: routeSchema({
+        body: createScheduleVersionBodySchema,
+        description:
+          "Create an immutable effective-dated venue or resource schedule version.",
+        headers: headersSchema,
+        operationId: "createScheduleVersion",
+        params: venueParamsSchema,
+        response: responses(
+          {
+            additionalProperties: false,
+            properties: {
+              requestId: { type: "string" },
+              schedule: scheduleVersionResponseSchema,
+            },
+            required: ["requestId", "schedule"],
+            type: "object",
+          },
+          201,
+        ),
+        tags: ["configuration"],
+      }),
+    },
+    async (request, reply) => {
+      const context = await commandContext(request, dependencies)
+      const { venueId } = params.venue.parse(request.params)
+      const input = createScheduleVersionSchema.parse(request.body)
+      const schedule = await dependencies.service.createScheduleVersion(
+        context,
+        venueId,
+        input,
+      )
+      return reply.status(201).send({ requestId: request.id, schedule })
+    },
+  )
+
+  app.get(
+    "/v1/venues/:venueId/slot-preview",
+    {
+      schema: routeSchema({
+        description:
+          "Preview generated fixed schedule slots; this is not live availability.",
+        headers: headersSchema,
+        operationId: "previewFixedSlots",
+        params: venueParamsSchema,
+        querystring: slotPreviewQueryJsonSchema,
+        response: responses({
+          additionalProperties: false,
+          properties: {
+            preview: slotPreviewResponseSchema,
+            requestId: { type: "string" },
+          },
+          required: ["preview", "requestId"],
+          type: "object",
+        }),
+        tags: ["configuration"],
+      }),
+    },
+    async (request) => {
+      const context = await commandContext(request, dependencies)
+      const { venueId } = params.venue.parse(request.params)
+      const query = slotPreviewQuerySchema.parse(request.query)
+      const preview = await dependencies.service.previewFixedSlots(
+        context,
+        venueId,
+        query,
+      )
+      return { preview, requestId: request.id }
     },
   )
 }

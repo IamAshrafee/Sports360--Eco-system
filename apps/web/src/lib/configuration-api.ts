@@ -2,20 +2,29 @@ import {
   createActivity,
   createOffering,
   createResource,
+  createScheduleVersion,
   listActivities,
   listOfferings,
   listResources,
+  listScheduleVersions,
+  previewFixedSlots,
   updateActivity,
   updateOffering,
   updateResource,
   type ListActivitiesResponse,
   type ListOfferingsResponse,
   type ListResourcesResponse,
+  type CreateScheduleVersionData,
+  type ListScheduleVersionsResponse,
+  type PreviewFixedSlotsResponse,
 } from "@sports/api-client"
 
 export type Activity = ListActivitiesResponse["items"][number]
 export type Offering = ListOfferingsResponse["items"][number]
 export type Resource = ListResourcesResponse["items"][number]
+export type ScheduleVersion = ListScheduleVersionsResponse["items"][number]
+export type SlotPreview = PreviewFixedSlotsResponse["preview"]
+export type CreateScheduleVersionInput = CreateScheduleVersionData["body"]
 
 export class ConfigurationApiError extends Error {
   override readonly name = "ConfigurationApiError"
@@ -111,6 +120,43 @@ export async function loadOfferingSetup(
   }
 }
 
+export async function loadScheduleSetup(
+  businessId: string,
+  venueId: string,
+): Promise<{
+  offerings: Offering[]
+  resources: Resource[]
+  schedules: ScheduleVersion[]
+}> {
+  const options = requestOptions(businessId)
+  const [resourceResult, offeringResult, scheduleResult] = await Promise.all([
+    listResources({
+      ...options,
+      path: { venueId },
+      query: { limit: 100 },
+    }),
+    listOfferings({
+      ...options,
+      path: { venueId },
+      query: { limit: 100 },
+    }),
+    listScheduleVersions({
+      ...options,
+      path: { venueId },
+    }),
+  ])
+
+  if (resourceResult.error !== undefined) throwApiError(resourceResult.error)
+  if (offeringResult.error !== undefined) throwApiError(offeringResult.error)
+  if (scheduleResult.error !== undefined) throwApiError(scheduleResult.error)
+
+  return {
+    offerings: offeringResult.data.items,
+    resources: resourceResult.data.items,
+    schedules: scheduleResult.data.items,
+  }
+}
+
 export async function addActivity(
   businessId: string,
   input: { code: string; displayName: string },
@@ -203,4 +249,36 @@ export async function changeOffering(
   })
   if (result.error !== undefined) throwApiError(result.error)
   return result.data.offering
+}
+
+export async function addScheduleVersion(
+  businessId: string,
+  venueId: string,
+  input: CreateScheduleVersionInput,
+): Promise<ScheduleVersion> {
+  const result = await createScheduleVersion({
+    ...requestOptions(businessId),
+    body: input,
+    path: { venueId },
+  })
+  if (result.error !== undefined) throwApiError(result.error)
+  return result.data.schedule
+}
+
+export async function loadSlotPreview(
+  businessId: string,
+  venueId: string,
+  query: {
+    offeringId: string
+    operationalDate: string
+    resourceId: string
+  },
+): Promise<SlotPreview> {
+  const result = await previewFixedSlots({
+    ...requestOptions(businessId),
+    path: { venueId },
+    query,
+  })
+  if (result.error !== undefined) throwApiError(result.error)
+  return result.data.preview
 }

@@ -2,7 +2,7 @@ import { ArrowRight, CalendarDays, MapPin, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 
 import { Badge } from "@sports/ui/components/badge"
-import { Button } from "@sports/ui/components/button"
+import { Button, buttonVariants } from "@sports/ui/components/button"
 import {
   Card,
   CardContent,
@@ -61,14 +61,16 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button
-              className="min-h-11"
-              render={<Link href="/setup" />}
-              size="lg"
+            <Link
+              className={buttonVariants({
+                className: "min-h-11",
+                size: "lg",
+              })}
+              href="/setup"
             >
               Start venue setup
               <ArrowRight aria-hidden="true" data-icon="inline-end" />
-            </Button>
+            </Link>
             <Button size="lg" variant="outline">
               Review architecture
             </Button>

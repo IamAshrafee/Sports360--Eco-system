@@ -1,6 +1,6 @@
 # Phase 5 Staff-Side Booking Core Delivery Plan
 
-Status: Implementation active; P5-01 complete
+Status: Implementation active; P5-01 and P5-02 complete
 
 Last reviewed: 2026-07-24
 
@@ -170,6 +170,12 @@ Exit:
 - generated slots are non-overlapping, half-open, and entirely inside the
   effective schedule;
 - edits do not reinterpret already-snapshotted booking times.
+
+Implementation-ready brief:
+[P5-02 schedule and fixed slots](phase-5/P5-02-schedule-and-fixed-slots.md).
+
+Implementation evidence:
+[Phase 5 schedule and fixed slots](../engineering/phase-5-schedule-and-fixed-slots.md).
 
 ### P5-03 — Price, policy, and add-ons
 
@@ -385,6 +391,7 @@ Required evidence:
 
 ## Immediate next action
 
-Prepare and implement only P5-02 Schedule and Fixed Slots. Preserve the P5-01
-configuration boundaries and do not start pricing, availability, booking,
-public publication, or payment behavior in the same task.
+Prepare and implement only P5-03 Price, Policy, and Add-ons. Preserve the
+P5-01 configuration and P5-02 schedule boundaries. Do not start live
+availability, capacity claims, booking, public publication, or payment
+behavior in the same task.

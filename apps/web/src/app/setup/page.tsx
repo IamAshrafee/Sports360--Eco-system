@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Boxes, PackageOpen } from "lucide-react"
+import { ArrowRight, Boxes, CalendarClock, PackageOpen } from "lucide-react"
 
 import { Badge } from "@sports/ui/components/badge"
 import {
@@ -29,15 +29,15 @@ export default async function SetupPage({ searchParams }: SetupPageProps) {
       {hasContext ? (
         <div className="space-y-6">
           <div className="space-y-2">
-            <Badge variant="outline">2 configuration sections</Badge>
+            <Badge variant="outline">3 configuration sections</Badge>
             <p className="text-muted-foreground max-w-2xl leading-7">
               Create the playable resources first, then connect them to
-              fixed-duration offerings. Schedules and prices remain separate
-              later steps.
+              fixed-duration offerings, then define effective schedules and
+              preview fixed slots. Prices remain a later step.
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <SetupCard
               description="Create tenant-owned activities and independent playable spaces."
               href={`/setup/resources?businessId=${businessId}&venueId=${venueId}`}
@@ -49,6 +49,12 @@ export default async function SetupPage({ searchParams }: SetupPageProps) {
               href={`/setup/offerings?businessId=${businessId}&venueId=${venueId}`}
               icon={<PackageOpen aria-hidden="true" className="size-5" />}
               title="Offerings"
+            />
+            <SetupCard
+              description="Define venue or resource hours, exceptions, and preview fixed internal slots."
+              href={`/setup/schedule?businessId=${businessId}&venueId=${venueId}`}
+              icon={<CalendarClock aria-hidden="true" className="size-5" />}
+              title="Schedule & slots"
             />
           </div>
         </div>

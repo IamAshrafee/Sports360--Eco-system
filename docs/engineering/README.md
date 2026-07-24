@@ -10,9 +10,10 @@ describe executable repository state, verification, and remaining work.
 
 1. [Phase 4 engineering foundation](phase-4-foundation.md)
 2. [Phase 5 configuration core](phase-5-configuration-core.md)
-3. [Toolchain and version audit](toolchain-version-audit.md)
-4. [Local development guide](local-development-guide.md)
-5. [PostgreSQL backup and restore runbook](backup-restore-runbook.md)
+3. [Phase 5 schedule and fixed slots](phase-5-schedule-and-fixed-slots.md)
+4. [Toolchain and version audit](toolchain-version-audit.md)
+5. [Local development guide](local-development-guide.md)
+6. [PostgreSQL backup and restore runbook](backup-restore-runbook.md)
 
 ## Documentation rule
 

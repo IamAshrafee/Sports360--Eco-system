@@ -342,6 +342,7 @@ describe("database security boundary", () => {
       "004_security_definer_owner_access.sql",
       "005_configuration_core.sql",
       "006_configuration_invariant_hardening.sql",
+      "007_schedule_and_fixed_slots.sql",
     ])
   })
 })

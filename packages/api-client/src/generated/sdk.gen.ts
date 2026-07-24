@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateActivityData, CreateActivityErrors, CreateActivityResponses, CreateOfferingData, CreateOfferingErrors, CreateOfferingResponses, CreateResourceData, CreateResourceErrors, CreateResourceResponses, GetOfferingData, GetOfferingErrors, GetOfferingResponses, GetV1HealthLiveData, GetV1HealthLiveResponses, GetV1HealthReadyData, GetV1HealthReadyErrors, GetV1HealthReadyResponses, GetV1MeData, GetV1MeErrors, GetV1MeResponses, ListActivitiesData, ListActivitiesErrors, ListActivitiesResponses, ListOfferingsData, ListOfferingsErrors, ListOfferingsResponses, ListResourcesData, ListResourcesErrors, ListResourcesResponses, UpdateActivityData, UpdateActivityErrors, UpdateActivityResponses, UpdateOfferingData, UpdateOfferingErrors, UpdateOfferingResponses, UpdateResourceData, UpdateResourceErrors, UpdateResourceResponses } from './types.gen';
+import type { CreateActivityData, CreateActivityErrors, CreateActivityResponses, CreateOfferingData, CreateOfferingErrors, CreateOfferingResponses, CreateResourceData, CreateResourceErrors, CreateResourceResponses, CreateScheduleVersionData, CreateScheduleVersionErrors, CreateScheduleVersionResponses, GetOfferingData, GetOfferingErrors, GetOfferingResponses, GetV1HealthLiveData, GetV1HealthLiveResponses, GetV1HealthReadyData, GetV1HealthReadyErrors, GetV1HealthReadyResponses, GetV1MeData, GetV1MeErrors, GetV1MeResponses, ListActivitiesData, ListActivitiesErrors, ListActivitiesResponses, ListOfferingsData, ListOfferingsErrors, ListOfferingsResponses, ListResourcesData, ListResourcesErrors, ListResourcesResponses, ListScheduleVersionsData, ListScheduleVersionsErrors, ListScheduleVersionsResponses, PreviewFixedSlotsData, PreviewFixedSlotsErrors, PreviewFixedSlotsResponses, UpdateActivityData, UpdateActivityErrors, UpdateActivityResponses, UpdateOfferingData, UpdateOfferingErrors, UpdateOfferingResponses, UpdateResourceData, UpdateResourceErrors, UpdateResourceResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -114,6 +114,28 @@ export const updateOffering = <ThrowOnError extends boolean = false>(options: Op
         ...options.headers
     }
 });
+
+/**
+ * List immutable venue and resource schedule versions for an authorized venue.
+ */
+export const listScheduleVersions = <ThrowOnError extends boolean = false>(options: Options<ListScheduleVersionsData, ThrowOnError>): RequestResult<ListScheduleVersionsResponses, ListScheduleVersionsErrors, ThrowOnError> => (options.client ?? client).get<ListScheduleVersionsResponses, ListScheduleVersionsErrors, ThrowOnError>({ url: '/v1/venues/{venueId}/schedules', ...options });
+
+/**
+ * Create an immutable effective-dated venue or resource schedule version.
+ */
+export const createScheduleVersion = <ThrowOnError extends boolean = false>(options: Options<CreateScheduleVersionData, ThrowOnError>): RequestResult<CreateScheduleVersionResponses, CreateScheduleVersionErrors, ThrowOnError> => (options.client ?? client).post<CreateScheduleVersionResponses, CreateScheduleVersionErrors, ThrowOnError>({
+    url: '/v1/venues/{venueId}/schedules',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Preview generated fixed schedule slots; this is not live availability.
+ */
+export const previewFixedSlots = <ThrowOnError extends boolean = false>(options: Options<PreviewFixedSlotsData, ThrowOnError>): RequestResult<PreviewFixedSlotsResponses, PreviewFixedSlotsErrors, ThrowOnError> => (options.client ?? client).get<PreviewFixedSlotsResponses, PreviewFixedSlotsErrors, ThrowOnError>({ url: '/v1/venues/{venueId}/slot-preview', ...options });
 
 /**
  * Process liveness check.

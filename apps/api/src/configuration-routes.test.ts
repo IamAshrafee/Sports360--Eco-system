@@ -1,5 +1,8 @@
 import { AuthorizationError } from "@sports/authorization"
-import { ConfigurationPersistenceError } from "@sports/persistence"
+import {
+  ConfigurationPersistenceError,
+  SchedulePersistenceError,
+} from "@sports/persistence"
 import { afterEach, describe, expect, it, vi } from "vitest"
 
 import { buildApp } from "./app.js"
@@ -9,6 +12,9 @@ import type { ConfigurationRouteDependencies } from "./configuration-routes.js"
 const businessId = "019b7000-0000-7000-8000-000000000001"
 const venueId = "019b7000-0000-7000-8000-000000000201"
 const activityId = "019b7000-0000-7000-8000-000000000401"
+const offeringId = "019b7000-0000-7000-8000-000000000501"
+const resourceId = "019b7000-0000-7000-8000-000000000301"
+const scheduleId = "019b7000-0000-7000-8000-000000000801"
 
 const testConfig: ApiConfig = {
   API_CORS_ORIGINS: ["http://localhost:3000"],
@@ -33,6 +39,43 @@ const activity = {
   version: 1,
 }
 
+const schedule = {
+  createdAt: "2026-07-24T10:00:00.000Z",
+  effectiveFrom: "2026-07-27",
+  effectiveUntil: null,
+  exceptions: [],
+  id: scheduleId,
+  resourceId: null,
+  scope: "VENUE" as const,
+  timezone: "Asia/Dhaka",
+  venueId,
+  version: 1,
+  weeklyPeriods: [
+    {
+      closesAt: "23:00",
+      crossesMidnight: false,
+      opensAt: "08:00",
+      weekday: 1,
+    },
+  ],
+}
+
+const preview = {
+  offeringDurationMinutes: 60,
+  operationalDate: "2026-07-27",
+  scheduleScope: "VENUE" as const,
+  scheduleVersionId: scheduleId,
+  slots: [
+    {
+      endAt: "2026-07-27T03:00:00.000Z",
+      localEnd: "2026-07-27T09:00:00+06:00",
+      localStart: "2026-07-27T08:00:00+06:00",
+      startAt: "2026-07-27T02:00:00.000Z",
+    },
+  ],
+  timezone: "Asia/Dhaka",
+}
+
 function dependencies(): ConfigurationRouteDependencies {
   return {
     authenticate: vi.fn().mockResolvedValue({
@@ -43,6 +86,7 @@ function dependencies(): ConfigurationRouteDependencies {
       createActivity: vi.fn().mockResolvedValue(activity),
       createOffering: vi.fn(),
       createResource: vi.fn(),
+      createScheduleVersion: vi.fn().mockResolvedValue(schedule),
       getOffering: vi.fn(),
       listActivities: vi.fn().mockResolvedValue({
         items: [activity],
@@ -56,6 +100,8 @@ function dependencies(): ConfigurationRouteDependencies {
         items: [],
         nextCursor: null,
       }),
+      listScheduleVersions: vi.fn().mockResolvedValue([schedule]),
+      previewFixedSlots: vi.fn().mockResolvedValue(preview),
       updateActivity: vi.fn(),
       updateOffering: vi.fn(),
       updateResource: vi.fn(),
@@ -236,6 +282,135 @@ describe("configuration API", () => {
         get: { operationId: "listResources" },
         post: { operationId: "createResource" },
       },
+      "/v1/venues/{venueId}/schedules": {
+        get: { operationId: "listScheduleVersions" },
+        post: { operationId: "createScheduleVersion" },
+      },
+      "/v1/venues/{venueId}/slot-preview": {
+        get: { operationId: "previewFixedSlots" },
+      },
+    })
+  })
+
+  it("creates and previews a validated fixed schedule", async () => {
+    const configuration = dependencies()
+    const app = await buildApp({
+      config: testConfig,
+      configuration,
+      logger: false,
+    })
+    apps.push(app)
+
+    const created = await app.inject({
+      headers: {
+        "x-business-id": businessId,
+        "x-request-id": "schedule-create",
+      },
+      method: "POST",
+      payload: {
+        effectiveFrom: "2026-07-27",
+        weeklyPeriods: [
+          {
+            closesAt: "23:00",
+            crossesMidnight: false,
+            opensAt: "08:00",
+            weekday: 1,
+          },
+        ],
+      },
+      url: `/v1/venues/${venueId}/schedules`,
+    })
+    expect(created.statusCode).toBe(201)
+    expect(created.json()).toEqual({
+      requestId: "schedule-create",
+      schedule,
+    })
+    expect(configuration.service.createScheduleVersion).toHaveBeenCalledWith(
+      expect.objectContaining({ businessId }),
+      venueId,
+      {
+        effectiveFrom: "2026-07-27",
+        exceptions: [],
+        weeklyPeriods: schedule.weeklyPeriods,
+      },
+    )
+
+    const response = await app.inject({
+      headers: { "x-business-id": businessId },
+      method: "GET",
+      query: {
+        offeringId,
+        operationalDate: "2026-07-27",
+        resourceId,
+      },
+      url: `/v1/venues/${venueId}/slot-preview`,
+    })
+    expect(response.statusCode).toBe(200)
+    expect(response.json()).toMatchObject({ preview })
+    expect(configuration.service.previewFixedSlots).toHaveBeenCalledWith(
+      expect.objectContaining({ businessId }),
+      venueId,
+      {
+        offeringId,
+        operationalDate: "2026-07-27",
+        resourceId,
+      },
+    )
+  })
+
+  it("rejects invalid exception shapes and maps missing effective schedules", async () => {
+    const configuration = dependencies()
+    vi.mocked(configuration.service.previewFixedSlots).mockRejectedValue(
+      new SchedulePersistenceError(
+        "NO_EFFECTIVE_SCHEDULE",
+        "No venue or resource schedule is effective for that date.",
+      ),
+    )
+    const app = await buildApp({
+      config: testConfig,
+      configuration,
+      logger: false,
+    })
+    apps.push(app)
+
+    const invalid = await app.inject({
+      headers: { "x-business-id": businessId },
+      method: "POST",
+      payload: {
+        effectiveFrom: "2026-07-27",
+        exceptions: [
+          {
+            kind: "CLOSED",
+            localDate: "2026-07-28",
+            periods: [
+              {
+                closesAt: "10:00",
+                crossesMidnight: false,
+                opensAt: "09:00",
+              },
+            ],
+          },
+        ],
+        weeklyPeriods: schedule.weeklyPeriods,
+      },
+      url: `/v1/venues/${venueId}/schedules`,
+    })
+    expect(invalid.statusCode).toBe(400)
+    expect(invalid.json()).toMatchObject({ code: "VALIDATION_ERROR" })
+
+    const missing = await app.inject({
+      headers: { "x-business-id": businessId },
+      method: "GET",
+      query: {
+        offeringId,
+        operationalDate: "2026-07-27",
+        resourceId,
+      },
+      url: `/v1/venues/${venueId}/slot-preview`,
+    })
+    expect(missing.statusCode).toBe(404)
+    expect(missing.json()).toMatchObject({
+      code: "NO_EFFECTIVE_SCHEDULE",
     })
   })
 })

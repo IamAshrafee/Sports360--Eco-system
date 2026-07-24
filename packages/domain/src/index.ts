@@ -24,3 +24,15 @@ export {
   normalizeActivityCode,
   uniqueResourceIds,
 } from "./configuration.js"
+export {
+  assertIanaTimezone,
+  assertScheduleDefinition,
+  effectivePeriodsForDate,
+  generateFixedSlots,
+  isoWeekday,
+  ScheduleRuleError,
+  type FixedSlot,
+  type LocalScheduleException,
+  type LocalSchedulePeriod,
+  type WeeklyLocalSchedulePeriod,
+} from "./schedule.js"

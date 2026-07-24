@@ -3201,6 +3201,1187 @@
         }
       }
     },
+    "/v1/venues/{venueId}/schedules": {
+      "get": {
+        "operationId": "listScheduleVersions",
+        "tags": [
+          "configuration"
+        ],
+        "description": "List immutable venue and resource schedule versions for an authorized venue.",
+        "parameters": [
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "query",
+            "name": "resourceId",
+            "required": false
+          },
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "path",
+            "name": "venueId",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "x-business-id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "items": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "createdAt": {
+                            "format": "date-time",
+                            "type": "string"
+                          },
+                          "effectiveFrom": {
+                            "format": "date",
+                            "type": "string"
+                          },
+                          "effectiveUntil": {
+                            "anyOf": [
+                              {
+                                "format": "date",
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "exceptions": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "kind": {
+                                  "enum": [
+                                    "CLOSED",
+                                    "REPLACE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "localDate": {
+                                  "format": "date",
+                                  "type": "string"
+                                },
+                                "periods": {
+                                  "items": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "closesAt": {
+                                        "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                        "type": "string"
+                                      },
+                                      "crossesMidnight": {
+                                        "type": "boolean"
+                                      },
+                                      "opensAt": {
+                                        "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "closesAt",
+                                      "crossesMidnight",
+                                      "opensAt"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "type": "array"
+                                },
+                                "reason": {
+                                  "maxLength": 240,
+                                  "minLength": 1,
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "kind",
+                                "localDate",
+                                "periods"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "id": {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "resourceId": {
+                            "anyOf": [
+                              {
+                                "format": "uuid",
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "scope": {
+                            "enum": [
+                              "VENUE",
+                              "RESOURCE"
+                            ],
+                            "type": "string"
+                          },
+                          "timezone": {
+                            "maxLength": 120,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "venueId": {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "version": {
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "weeklyPeriods": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "closesAt": {
+                                  "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                  "type": "string"
+                                },
+                                "crossesMidnight": {
+                                  "type": "boolean"
+                                },
+                                "opensAt": {
+                                  "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                  "type": "string"
+                                },
+                                "weekday": {
+                                  "maximum": 7,
+                                  "minimum": 1,
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "closesAt",
+                                "crossesMidnight",
+                                "opensAt",
+                                "weekday"
+                              ],
+                              "type": "object"
+                            },
+                            "minItems": 1,
+                            "type": "array"
+                          }
+                        },
+                        "required": [
+                          "createdAt",
+                          "effectiveFrom",
+                          "effectiveUntil",
+                          "exceptions",
+                          "id",
+                          "resourceId",
+                          "scope",
+                          "timezone",
+                          "venueId",
+                          "version",
+                          "weeklyPeriods"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createScheduleVersion",
+        "tags": [
+          "configuration"
+        ],
+        "description": "Create an immutable effective-dated venue or resource schedule version.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "effectiveFrom": {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  "exceptions": {
+                    "default": [],
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "enum": [
+                            "CLOSED",
+                            "REPLACE"
+                          ],
+                          "type": "string"
+                        },
+                        "localDate": {
+                          "format": "date",
+                          "type": "string"
+                        },
+                        "periods": {
+                          "default": [],
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "closesAt": {
+                                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "crossesMidnight": {
+                                "type": "boolean"
+                              },
+                              "opensAt": {
+                                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "closesAt",
+                              "crossesMidnight",
+                              "opensAt"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 24,
+                          "type": "array"
+                        },
+                        "reason": {
+                          "maxLength": 240,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "localDate",
+                        "periods"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 366,
+                    "type": "array"
+                  },
+                  "resourceId": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "weeklyPeriods": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "closesAt": {
+                          "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                          "type": "string"
+                        },
+                        "crossesMidnight": {
+                          "type": "boolean"
+                        },
+                        "opensAt": {
+                          "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                          "type": "string"
+                        },
+                        "weekday": {
+                          "maximum": 7,
+                          "minimum": 1,
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "closesAt",
+                        "crossesMidnight",
+                        "opensAt",
+                        "weekday"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 56,
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "effectiveFrom",
+                  "weeklyPeriods"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "path",
+            "name": "venueId",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "x-business-id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "requestId": {
+                      "type": "string"
+                    },
+                    "schedule": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "createdAt": {
+                          "format": "date-time",
+                          "type": "string"
+                        },
+                        "effectiveFrom": {
+                          "format": "date",
+                          "type": "string"
+                        },
+                        "effectiveUntil": {
+                          "anyOf": [
+                            {
+                              "format": "date",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "exceptions": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "kind": {
+                                "enum": [
+                                  "CLOSED",
+                                  "REPLACE"
+                                ],
+                                "type": "string"
+                              },
+                              "localDate": {
+                                "format": "date",
+                                "type": "string"
+                              },
+                              "periods": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "closesAt": {
+                                      "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                      "type": "string"
+                                    },
+                                    "crossesMidnight": {
+                                      "type": "boolean"
+                                    },
+                                    "opensAt": {
+                                      "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "closesAt",
+                                    "crossesMidnight",
+                                    "opensAt"
+                                  ],
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "reason": {
+                                "maxLength": 240,
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "kind",
+                              "localDate",
+                              "periods"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "id": {
+                          "format": "uuid",
+                          "type": "string"
+                        },
+                        "resourceId": {
+                          "anyOf": [
+                            {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "scope": {
+                          "enum": [
+                            "VENUE",
+                            "RESOURCE"
+                          ],
+                          "type": "string"
+                        },
+                        "timezone": {
+                          "maxLength": 120,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "venueId": {
+                          "format": "uuid",
+                          "type": "string"
+                        },
+                        "version": {
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "weeklyPeriods": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "closesAt": {
+                                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "crossesMidnight": {
+                                "type": "boolean"
+                              },
+                              "opensAt": {
+                                "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$",
+                                "type": "string"
+                              },
+                              "weekday": {
+                                "maximum": 7,
+                                "minimum": 1,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "closesAt",
+                              "crossesMidnight",
+                              "opensAt",
+                              "weekday"
+                            ],
+                            "type": "object"
+                          },
+                          "minItems": 1,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "createdAt",
+                        "effectiveFrom",
+                        "effectiveUntil",
+                        "exceptions",
+                        "id",
+                        "resourceId",
+                        "scope",
+                        "timezone",
+                        "venueId",
+                        "version",
+                        "weeklyPeriods"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "requestId",
+                    "schedule"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/venues/{venueId}/slot-preview": {
+      "get": {
+        "operationId": "previewFixedSlots",
+        "tags": [
+          "configuration"
+        ],
+        "description": "Preview generated fixed schedule slots; this is not live availability.",
+        "parameters": [
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "query",
+            "name": "offeringId",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "date",
+              "type": "string"
+            },
+            "in": "query",
+            "name": "operationalDate",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "query",
+            "name": "resourceId",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "path",
+            "name": "venueId",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "x-business-id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "preview": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "offeringDurationMinutes": {
+                          "maximum": 1440,
+                          "minimum": 1,
+                          "type": "integer"
+                        },
+                        "operationalDate": {
+                          "format": "date",
+                          "type": "string"
+                        },
+                        "scheduleScope": {
+                          "enum": [
+                            "VENUE",
+                            "RESOURCE"
+                          ],
+                          "type": "string"
+                        },
+                        "scheduleVersionId": {
+                          "format": "uuid",
+                          "type": "string"
+                        },
+                        "slots": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "endAt": {
+                                "format": "date-time",
+                                "type": "string"
+                              },
+                              "localEnd": {
+                                "type": "string"
+                              },
+                              "localStart": {
+                                "type": "string"
+                              },
+                              "startAt": {
+                                "format": "date-time",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "endAt",
+                              "localEnd",
+                              "localStart",
+                              "startAt"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "timezone": {
+                          "maxLength": 120,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "offeringDurationMinutes",
+                        "operationalDate",
+                        "scheduleScope",
+                        "scheduleVersionId",
+                        "slots",
+                        "timezone"
+                      ],
+                      "type": "object"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "preview",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "requestId"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/health/live": {
       "get": {
         "tags": [

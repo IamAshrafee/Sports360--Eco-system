@@ -6,19 +6,27 @@ import type {
   CreateResource,
   Offering,
   Resource,
+  ScheduleListQuery,
+  ScheduleVersion,
+  SlotPreview,
+  SlotPreviewQuery,
   UpdateActivity,
   UpdateOffering,
   UpdateResource,
+  CreateScheduleVersion,
 } from "@sports/contracts"
 import { requirePermission, requireVenueAccess } from "@sports/authorization"
 import {
   createActivity,
   createOffering,
   createResource,
+  createScheduleVersion,
   getOffering,
   listActivities,
   listOfferings,
   listResources,
+  listScheduleVersions,
+  previewFixedSlots,
   updateActivity,
   updateOffering,
   updateResource,
@@ -49,6 +57,11 @@ export interface ConfigurationService {
     venueId: string,
     input: CreateResource,
   ): Promise<Resource>
+  createScheduleVersion(
+    context: ConfigurationCommandContext,
+    venueId: string,
+    input: CreateScheduleVersion,
+  ): Promise<ScheduleVersion>
   getOffering(
     context: ConfigurationCommandContext,
     venueId: string,
@@ -68,6 +81,16 @@ export interface ConfigurationService {
     venueId: string,
     query: ConfigurationListQuery,
   ): Promise<ConfigurationPage<Resource>>
+  listScheduleVersions(
+    context: ConfigurationCommandContext,
+    venueId: string,
+    query: ScheduleListQuery,
+  ): Promise<ScheduleVersion[]>
+  previewFixedSlots(
+    context: ConfigurationCommandContext,
+    venueId: string,
+    query: SlotPreviewQuery,
+  ): Promise<SlotPreview>
   updateActivity(
     context: ConfigurationCommandContext,
     activityId: string,
@@ -131,6 +154,10 @@ export function createConfigurationService(pool: Pool): ConfigurationService {
       write(context, venueId, (client, actor) =>
         createResource(client, actor, venueId, input),
       ),
+    createScheduleVersion: (context, venueId, input) =>
+      write(context, venueId, (client, actor) =>
+        createScheduleVersion(client, actor, venueId, input),
+      ),
     getOffering: (context, venueId, offeringId) =>
       read(context, venueId, (client, actor) =>
         getOffering(client, actor, venueId, offeringId),
@@ -146,6 +173,14 @@ export function createConfigurationService(pool: Pool): ConfigurationService {
     listResources: (context, venueId, query) =>
       read(context, venueId, (client, actor) =>
         listResources(client, actor, venueId, query),
+      ),
+    listScheduleVersions: (context, venueId, query) =>
+      read(context, venueId, (client, actor) =>
+        listScheduleVersions(client, actor, venueId, query),
+      ),
+    previewFixedSlots: (context, venueId, query) =>
+      read(context, venueId, (client, actor) =>
+        previewFixedSlots(client, actor, venueId, query),
       ),
     updateActivity: (context, activityId, input) =>
       write(context, undefined, (client, actor) =>

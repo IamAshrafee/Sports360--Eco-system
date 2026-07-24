@@ -174,11 +174,12 @@ describe("configuration persistence", () => {
         "004_security_definer_owner_access.sql",
         "005_configuration_core.sql",
         "006_configuration_invariant_hardening.sql",
+        "007_schedule_and_fixed_slots.sql",
       ])
 
       const repeated = await runMigrations(temporaryPool)
       expect(repeated.applied).toEqual([])
-      expect(repeated.previouslyApplied).toHaveLength(6)
+      expect(repeated.previouslyApplied).toHaveLength(7)
     } finally {
       await temporaryPool?.end()
       await maintenancePool

@@ -11,8 +11,9 @@ venue operations, and owner reporting in one multi-tenant SaaS.
 Phase 4 engineering foundation is complete. Phase 5 implementation is active:
 P5-01 provides tenant-owned activity, independent-resource, and
 fixed-duration offering configuration across PostgreSQL, `/v1`, the generated
-client, and the shadcn-based setup UI. P5-02 schedules and fixed slots is the
-next bounded slice.
+client, and the shadcn-based setup UI. P5-02 adds effective venue/resource
+schedules, exceptions, and timezone-aware fixed-slot preview. P5-03 price,
+policy, and add-ons is the next bounded slice.
 
 Start with the [documentation index](docs/README.md).
 

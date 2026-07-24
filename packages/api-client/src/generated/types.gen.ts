@@ -954,6 +954,326 @@ export type UpdateOfferingResponses = {
 
 export type UpdateOfferingResponse = UpdateOfferingResponses[keyof UpdateOfferingResponses];
 
+export type ListScheduleVersionsData = {
+    body?: never;
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        venueId: string;
+    };
+    query?: {
+        resourceId?: string;
+    };
+    url: '/v1/venues/{venueId}/schedules';
+};
+
+export type ListScheduleVersionsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type ListScheduleVersionsError = ListScheduleVersionsErrors[keyof ListScheduleVersionsErrors];
+
+export type ListScheduleVersionsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        items: Array<{
+            createdAt: string;
+            effectiveFrom: string;
+            effectiveUntil: string | null;
+            exceptions: Array<{
+                kind: 'CLOSED' | 'REPLACE';
+                localDate: string;
+                periods: Array<{
+                    closesAt: string;
+                    crossesMidnight: boolean;
+                    opensAt: string;
+                }>;
+                reason?: string;
+            }>;
+            id: string;
+            resourceId: string | null;
+            scope: 'VENUE' | 'RESOURCE';
+            timezone: string;
+            venueId: string;
+            version: number;
+            weeklyPeriods: Array<{
+                closesAt: string;
+                crossesMidnight: boolean;
+                opensAt: string;
+                weekday: number;
+            }>;
+        }>;
+        requestId: string;
+    };
+};
+
+export type ListScheduleVersionsResponse = ListScheduleVersionsResponses[keyof ListScheduleVersionsResponses];
+
+export type CreateScheduleVersionData = {
+    body: {
+        effectiveFrom: string;
+        exceptions?: Array<{
+            kind: 'CLOSED' | 'REPLACE';
+            localDate: string;
+            periods: Array<{
+                closesAt: string;
+                crossesMidnight: boolean;
+                opensAt: string;
+            }>;
+            reason?: string;
+        }>;
+        resourceId?: string;
+        weeklyPeriods: Array<{
+            closesAt: string;
+            crossesMidnight: boolean;
+            opensAt: string;
+            weekday: number;
+        }>;
+    };
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        venueId: string;
+    };
+    query?: never;
+    url: '/v1/venues/{venueId}/schedules';
+};
+
+export type CreateScheduleVersionErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type CreateScheduleVersionError = CreateScheduleVersionErrors[keyof CreateScheduleVersionErrors];
+
+export type CreateScheduleVersionResponses = {
+    /**
+     * Default Response
+     */
+    201: {
+        requestId: string;
+        schedule: {
+            createdAt: string;
+            effectiveFrom: string;
+            effectiveUntil: string | null;
+            exceptions: Array<{
+                kind: 'CLOSED' | 'REPLACE';
+                localDate: string;
+                periods: Array<{
+                    closesAt: string;
+                    crossesMidnight: boolean;
+                    opensAt: string;
+                }>;
+                reason?: string;
+            }>;
+            id: string;
+            resourceId: string | null;
+            scope: 'VENUE' | 'RESOURCE';
+            timezone: string;
+            venueId: string;
+            version: number;
+            weeklyPeriods: Array<{
+                closesAt: string;
+                crossesMidnight: boolean;
+                opensAt: string;
+                weekday: number;
+            }>;
+        };
+    };
+};
+
+export type CreateScheduleVersionResponse = CreateScheduleVersionResponses[keyof CreateScheduleVersionResponses];
+
+export type PreviewFixedSlotsData = {
+    body?: never;
+    headers: {
+        'x-business-id': string;
+    };
+    path: {
+        venueId: string;
+    };
+    query: {
+        offeringId: string;
+        operationalDate: string;
+        resourceId: string;
+    };
+    url: '/v1/venues/{venueId}/slot-preview';
+};
+
+export type PreviewFixedSlotsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        code: string;
+        message: string;
+        requestId: string;
+    };
+};
+
+export type PreviewFixedSlotsError = PreviewFixedSlotsErrors[keyof PreviewFixedSlotsErrors];
+
+export type PreviewFixedSlotsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        preview: {
+            offeringDurationMinutes: number;
+            operationalDate: string;
+            scheduleScope: 'VENUE' | 'RESOURCE';
+            scheduleVersionId: string;
+            slots: Array<{
+                endAt: string;
+                localEnd: string;
+                localStart: string;
+                startAt: string;
+            }>;
+            timezone: string;
+        };
+        requestId: string;
+    };
+};
+
+export type PreviewFixedSlotsResponse = PreviewFixedSlotsResponses[keyof PreviewFixedSlotsResponses];
+
 export type GetV1HealthLiveData = {
     body?: never;
     path?: never;

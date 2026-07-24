@@ -1,9 +1,9 @@
 import Link from "next/link"
 import type { ReactNode } from "react"
-import { ArrowLeft, Boxes, PackageOpen } from "lucide-react"
+import { ArrowLeft, Boxes, CalendarClock, PackageOpen } from "lucide-react"
 
 import { Badge } from "@sports/ui/components/badge"
-import { Button } from "@sports/ui/components/button"
+import { buttonVariants } from "@sports/ui/components/button"
 
 interface SetupShellProps {
   businessId: string | undefined
@@ -50,26 +50,36 @@ export function SetupShell({
         </div>
 
         <nav aria-label="Setup sections" className="flex flex-wrap gap-2">
-          <Button
-            className="min-h-11"
-            render={
-              <Link href={setupHref("/setup/resources", businessId, venueId)} />
-            }
-            variant="outline"
+          <Link
+            className={buttonVariants({
+              className: "min-h-11",
+              variant: "outline",
+            })}
+            href={setupHref("/setup/resources", businessId, venueId)}
           >
             <Boxes aria-hidden="true" />
             Activities & resources
-          </Button>
-          <Button
-            className="min-h-11"
-            render={
-              <Link href={setupHref("/setup/offerings", businessId, venueId)} />
-            }
-            variant="outline"
+          </Link>
+          <Link
+            className={buttonVariants({
+              className: "min-h-11",
+              variant: "outline",
+            })}
+            href={setupHref("/setup/offerings", businessId, venueId)}
           >
             <PackageOpen aria-hidden="true" />
             Offerings
-          </Button>
+          </Link>
+          <Link
+            className={buttonVariants({
+              className: "min-h-11",
+              variant: "outline",
+            })}
+            href={setupHref("/setup/schedule", businessId, venueId)}
+          >
+            <CalendarClock aria-hidden="true" />
+            Schedule & slots
+          </Link>
         </nav>
       </header>
 

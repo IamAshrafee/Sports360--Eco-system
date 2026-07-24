@@ -17,7 +17,7 @@ phases use master delivery plans and bounded task briefs.
 | 2 — Detailed specification | Complete | Specification index, workflows, stories, criteria, and traceability | Amend only when an approved product change requires it |
 | 3 — Architecture | Complete | Architecture hub, 13 ADRs, threat model, and gate review | New architectural decisions require an ADR |
 | 4 — Engineering foundation | Complete | `docs/engineering/phase-4-foundation.md` | Extend through forward changes; do not rebuild the foundation |
-| 5 — Staff-side booking core | Implementation active; P5-01 complete | [Phase 5 delivery plan](phase-5-delivery-plan.md) | P5-02 Schedule and Fixed Slots |
+| 5 — Staff-side booking core | Implementation active; P5-01 and P5-02 complete | [Phase 5 delivery plan](phase-5-delivery-plan.md) | P5-03 Price, Policy, and Add-ons |
 | 6 — Customer booking and pilot SaaS | Planned; gated by Phase 5 | [Phase 6 delivery plan](phase-6-delivery-plan.md) | [P6-01 Published Public Catalogue](phase-6/P6-01-published-public-catalogue.md) |
 | 7 — Founder-operated simulated pilot | Planned; gated by Phase 6 | [Phase 7 delivery plan](phase-7-delivery-plan.md) | [P7-01 Simulation Harness](phase-7/P7-01-simulation-harness.md) |
 | 8 — Organic beta and commercial evidence | Planned; gated by Phase 7 | [Phase 8 delivery plan](phase-8-delivery-plan.md) | [P8-01 Organic-Beta Readiness Gate](phase-8/P8-01-organic-beta-readiness-gate.md) |

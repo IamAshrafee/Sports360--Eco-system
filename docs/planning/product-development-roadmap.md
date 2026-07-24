@@ -189,13 +189,15 @@ Completion evidence:
 
 ## Phase 5: Staff-side booking core
 
-Status: Implementation active; P5-01 complete
+Status: Implementation active; P5-01 and P5-02 complete
 
 Detailed work control:
 
 - [Phase 5 delivery plan](phase-5-delivery-plan.md)
 - [Completed P5-01 Configuration Core](phase-5/P5-01-configuration-core.md)
 - [P5-01 implementation evidence](../engineering/phase-5-configuration-core.md)
+- [Completed P5-02 Schedule and Fixed Slots](phase-5/P5-02-schedule-and-fixed-slots.md)
+- [P5-02 implementation evidence](../engineering/phase-5-schedule-and-fixed-slots.md)
 
 Work order:
 
