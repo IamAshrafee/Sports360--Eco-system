@@ -1,0 +1,66 @@
+# Product Knowledge Base
+
+This directory is the source of truth for product planning. Documents describe
+the currently approved direction; they do not prove that every market
+assumption has been validated.
+
+## Document status vocabulary
+
+| Status | Meaning |
+|---|---|
+| Confirmed | Approved product direction |
+| Assumption | Plausible belief requiring validation |
+| Observation | Evidence or pattern found during research |
+| Open | A decision has not been made |
+| Deferred | Intentionally outside the current release |
+
+## Product definition
+
+1. [Product vision](product/product-vision.md)
+2. [Market and ideal customer](product/market-and-ideal-customer.md)
+3. [Personas, roles, and access](product/personas-roles-and-access.md)
+4. [Business and facility model](product/business-and-facility-model.md)
+5. [Booking lifecycle](product/booking-lifecycle.md)
+6. [Pricing, payments, and finance](product/pricing-payments-and-finance.md)
+7. [Customers, players, and teams](product/customers-players-and-teams.md)
+8. [Daily venue operations](product/daily-venue-operations.md)
+9. [Reporting and analytics](product/reporting-and-analytics.md)
+10. [SaaS onboarding and subscriptions](product/saas-onboarding-and-subscriptions.md)
+11. [Private-pilot MVP scope](product/pilot-mvp-scope.md)
+
+## Future product blueprint
+
+- [Future blueprint index](future/README.md)
+- [Product horizons](future/product-horizons.md)
+- [Advanced booking and capacity](future/advanced-booking-and-capacity.md)
+- [Memberships, teams, and community](future/memberships-teams-and-community.md)
+- [Tournaments, academies, and events](future/tournaments-academies-and-events.md)
+- [Commerce, marketplace, and finance](future/commerce-marketplace-and-finance.md)
+- [Workforce, equipment, and facility operations](future/workforce-equipment-and-facility-operations.md)
+- [Platform, enterprise, and international expansion](future/platform-enterprise-and-international.md)
+- [Analytics, automation, and intelligence](future/analytics-automation-and-intelligence.md)
+
+## Planning and governance
+
+- [Decision log](planning/decision-log.md)
+- [Assumptions and validation](planning/assumptions-and-validation.md)
+- [Open questions](planning/open-questions.md)
+- [Feature catalogue](planning/feature-catalogue.md)
+- [Product development roadmap](planning/product-development-roadmap.md)
+- [Glossary](planning/glossary.md)
+
+## Research
+
+- [Market observations](research/market-observations.md)
+- [Solo-founder validation plan](research/solo-founder-validation-plan.md)
+- [Optional customer interview plan](research/customer-interview-plan.md)
+
+## How to change the plan
+
+1. Add new evidence to research or validation notes.
+2. Record a proposed change as an open question.
+3. Evaluate its effect on the MVP and existing decisions.
+4. Record the approved outcome in the decision log.
+5. Update every affected product document.
+6. Keep deferred ideas in the feature catalogue instead of silently expanding
+   the MVP.
