@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sports SaaS Engineering"
+  short_description: "Build this sports venue SaaS safely"
+  default_prompt: "Use $sports-saas-engineering to implement the next approved sports SaaS task."

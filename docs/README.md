@@ -88,6 +88,15 @@ assumption has been validated.
 - [Engineering index](engineering/README.md)
 - [Phase 4 foundation record](engineering/phase-4-foundation.md)
 
+## AI collaboration and continuity
+
+- [AI collaboration index](ai/README.md)
+- [Current project state](ai/current-state.md)
+- [Context map](ai/context-map.md)
+- [Definition of done](ai/definition-of-done.md)
+- [Current handoff](ai/handoff.md)
+- [Public agent-skills policy](ai/public-skills-policy.md)
+
 ## How to change the plan
 
 1. Add new evidence to research or validation notes.
