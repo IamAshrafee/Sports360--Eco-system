@@ -22,6 +22,12 @@ select Homebrew Node.js 26. `project:doctor` validates version declarations,
 dependency links, the generated client build, and optional local
 infrastructure before development continues.
 
+The macOS daily-development workflow is now automated and verified. Finder
+launchers provide one-click Start, Restart, Status, and Stop actions over a
+single guarded supervisor. The supervisor starts infrastructure, runs the full
+doctor, waits for web/API/worker readiness, streams separated service logs, and
+cleans up application process trees without deleting local database data.
+
 ## Files
 
 - `packages/persistence/migrations/005_configuration_core.sql` and
@@ -46,6 +52,10 @@ infrastructure before development continues.
   evidence, limitations, and continuation.
 - `scripts/pnpmw` and `scripts/project-doctor.mjs` — canonical runtime-aware
   package-manager entry and actionable environment diagnosis.
+- `scripts/dev-environment.sh` and the root `*.command` launchers — guarded
+  macOS start, restart, status, and stop workflow for the complete local stack.
+- `docs/engineering/local-development-guide.md` — Finder workflow, commands,
+  URLs, logs, stop semantics, and manual fallback.
 - `AGENTS.md`, the repository skill, README, AI operating guides, engineering
   runbooks, and phase commands — routed through the wrapper.
 - `.github/workflows/quality.yml` — continuously runs the full project doctor
@@ -84,6 +94,12 @@ infrastructure before development continues.
   impossible.
 - CI keeps direct `pnpm` commands because setup actions establish the declared
   Node and pnpm versions before project scripts run.
+- One supervisor owns web, API, worker, and the combined log follower. Its PID
+  must resolve to this repository and launcher before an external stop can send
+  a signal.
+- Routine stop/restart leaves PostgreSQL and Valkey running for speed and data
+  continuity. Infrastructure shutdown remains the separate explicit
+  `./scripts/pnpmw infra:down` action.
 
 ## Verification
 
@@ -115,17 +131,27 @@ infrastructure before development continues.
 - `./scripts/pnpmw project:doctor:full` — passed with zero failures/warnings
   and healthy PostgreSQL and Valkey.
 - `./scripts/pnpmw ai:verify` — passed from the Node.js 26 caller environment.
+- All five launcher scripts passed Bash syntax checks and have executable
+  permissions.
+- Real `start` and `restart` runs passed: Docker services became healthy, the
+  full project doctor reported zero failures/warnings, and web, API, and worker
+  all reached readiness.
+- Live `status`, duplicate-start refusal, external `stop`, PID cleanup, and
+  post-stop HTTP-down checks passed. PostgreSQL and Valkey deliberately
+  remained healthy after application shutdown.
+- Final `./scripts/pnpmw ai:verify` passed after the launcher and guide changes:
+  runtime, ESLint, TypeScript, all unit/component/API tests, and formatting.
 
 ## Repository state
 
 - Branch: `main`
-- HEAD: `7fcac46 Project preparation, documenting by breakdown phases.`
-- `main` matched `origin/main` at task start.
-- The working tree was clean before P5-01 and now contains only the uncommitted
-  P5-01 implementation, its documentation, and the approved toolchain
-  stabilization prerequisite.
+- HEAD: `8ea0c20 Phase 5, cycle 01 is done.`
+- `main` matches `origin/main`.
+- P5-01 and its toolchain stabilization are committed at the current HEAD. The
+  working tree contains only the uncommitted macOS development launchers,
+  supervisor, package aliases, and related documentation from this task.
 - `docs/others/` was preserved.
-- No files were staged, committed, pushed, or deployed.
+- No launcher-task files were staged, committed, pushed, or deployed.
 
 ## Risks and limitations
 
@@ -141,6 +167,12 @@ infrastructure before development continues.
 - `scripts/pnpmw` is a Bash/NVM entry for the current macOS/Linux development
   and CI model. A future Windows-native development workflow would require an
   equivalent reviewed entry rather than bypassing runtime checks.
+- Finder `.command` launchers are macOS-specific. Linux and agent workflows use
+  the same `scripts/dev-environment.sh` supervisor directly.
+- The live launcher run exposed an existing Base UI development warning where a
+  Button renders a non-button target with native-button semantics on the home
+  and setup shells. It did not affect launcher readiness, but the UI usage
+  should be corrected in the next frontend slice.
 
 ## Remaining work
 

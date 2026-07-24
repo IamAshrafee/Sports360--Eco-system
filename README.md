@@ -55,6 +55,12 @@ separately because they are required only for infrastructure/full gates.
 The wrapper requires NVM when the active shell does not already use the
 declared Node.js version. It never installs or silently upgrades a runtime.
 
+On macOS, the recommended daily workflow is to double-click
+`Start Development.command` in Finder. The matching Restart, Status, and Stop
+launchers safely control the same supervised environment. See the
+[local development guide](docs/engineering/local-development-guide.md) for
+behavior, URLs, logs, and manual recovery.
+
 ```bash
 ./scripts/pnpmw install --frozen-lockfile
 ./scripts/pnpmw infra:up
@@ -65,7 +71,13 @@ declared Node.js version. It never installs or silently upgrades a runtime.
 ./scripts/pnpmw build
 ```
 
-Run each process in a separate terminal:
+The one-command terminal equivalent starts and supervises all three processes:
+
+```bash
+./scripts/dev-environment.sh start
+```
+
+The manual fallback is to run each process in a separate terminal:
 
 ```bash
 ./scripts/pnpmw dev:web
