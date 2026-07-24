@@ -24,6 +24,7 @@ only after the stated tests pass.
 |---|---|---|---|---|
 | Runtime | TypeScript + Node.js production LTS | Accepted | Founder fit, supported ecosystem, web/API/worker reuse | Test later runtime changes behind contracts |
 | Web | Next.js App Router + React | Accepted | Staff web, public rendering, mobile web, SSR/SEO | Web can change without changing API/domain |
+| UI system | shadcn/ui + Base UI + Tailwind CSS semantic tokens | Accepted | Application-owned, accessible primitives and consistent customization | Shared UI exports isolate primitive replacement |
 | API | Fastify + REST/JSON + OpenAPI | Accepted | Dedicated high-performance, client-neutral contract | Contract survives framework replacement |
 | Database | Supported PostgreSQL | Accepted | Transactions, ranges, exclusions, exact types, RLS | PostgreSQL provider is portable; vendor is not abstracted away |
 | Data access | Kysely + `pg` | Accepted | Thin typed SQL and explicit PostgreSQL access | Repository-by-repository replacement |
@@ -137,3 +138,4 @@ proceed without pretending the unknowns are solved.
 - [ADR-010: Jobs and outbound providers](adrs/ADR-010-jobs-and-outbound-providers.md)
 - [ADR-011: Observability](adrs/ADR-011-observability.md)
 - [ADR-012: Repository and package management](adrs/ADR-012-repository-and-package-management.md)
+- [ADR-013: shadcn/ui design system](adrs/ADR-013-shadcn-ui-design-system.md)

@@ -20,6 +20,7 @@ made.
 | [ADR-010](ADR-010-jobs-and-outbound-providers.md) | Accepted | BullMQ, managed Valkey, and replaceable outbound providers |
 | [ADR-011](ADR-011-observability.md) | Accepted | OpenTelemetry with Better Stack as initial backend |
 | [ADR-012](ADR-012-repository-and-package-management.md) | Accepted | pnpm workspace without an initial build orchestrator |
+| [ADR-013](ADR-013-shadcn-ui-design-system.md) | Accepted | shadcn/ui as the frontend design-system foundation |
 
 ## ADR format
 

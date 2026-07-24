@@ -55,6 +55,7 @@ new decision that supersedes the old one rather than silently editing history.
 | D-046 | 2026-07-24 | Use BullMQ over managed Valkey, database outbox/due-time recovery, `sms.bd` as first SMS candidate, and Resend as first email candidate. | Delayed/retryable work needs strong worker tooling, while delivery providers must remain replaceable and unable to corrupt booking truth. |
 | D-047 | 2026-07-24 | Use OpenTelemetry and structured logs with Better Stack as the initial telemetry, uptime, and heartbeat backend. | One solo-friendly console meets early observability needs while OTLP preserves an exit path. |
 | D-048 | 2026-07-24 | Use a pnpm workspace without an initial build orchestrator. | One repository supports atomic contracts and shared packages; extra caching/orchestration should follow measured build pain. |
+| D-049 | 2026-07-24 | Use shadcn/ui on Base UI as the first-party web design-system foundation, with owned source in the shared UI workspace. | It matches founder preference, accelerates consistent accessible interfaces, and avoids competing component-library abstractions. |
 
 ## Decision template
 

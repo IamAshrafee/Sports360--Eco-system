@@ -39,6 +39,7 @@ packages/integrations
 packages/observability
 packages/config
 packages/test-support
+packages/ui
 ```
 
 Exact package granularity is finalized while scaffolding; packages must reflect

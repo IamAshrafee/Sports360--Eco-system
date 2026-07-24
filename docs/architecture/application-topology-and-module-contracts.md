@@ -43,11 +43,16 @@ packages/
   integrations/       OTP, notification, storage, future payment adapters
   observability/      Correlation, metrics, traces, redacted logging
   testkit/            Six archetype fixtures, builders, concurrency helpers
-  ui/                 Shared first-party visual components only
+  ui/                 shadcn primitives, semantic tokens, shared visual components
 ```
 
 Domain/application packages do not import Next.js, Fastify, queue, provider SDK,
 or database-driver types.
+
+The UI package follows
+[ADR-013](adrs/ADR-013-shadcn-ui-design-system.md). It owns shadcn-generated
+source and low-level composition. Web feature code owns workflow composition;
+neither layer owns server authorization or domain invariants.
 
 ## Layer rules
 

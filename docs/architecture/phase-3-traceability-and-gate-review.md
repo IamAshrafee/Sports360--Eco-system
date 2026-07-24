@@ -19,6 +19,7 @@ Date: 2026-07-24
 | Backup/restore | Deployment/recovery; ADR-009 | Timed restore/reconciliation drill | Covered with Phase 4 gate |
 | Low-latency region | Deployment/recovery; ADR-009 | Dhaka end-to-end benchmark | Covered with Phase 4 gate |
 | Observability/privacy | Threat model; ADR-011 | Redaction/alert/dashboard drills | Covered with Phase 4 gate |
+| UI consistency/accessibility | Frontend design system; ADR-013 | Component, keyboard, screen-reader and responsive tests | Covered with Phase 4 gate |
 | Solo-developer operation | ADR-001, ADR-006, provider cost strategy | Runbook and cost review | Covered |
 | Provider exit | Provider cost/exit strategy | Provider-loss drill | Covered with pre-beta gate |
 
@@ -33,7 +34,7 @@ Date: 2026-07-24
 | Reporting/subscription/platform workflows | Reporting, entitlement, subscription, platform modules |
 | 110 acceptance criteria | Architecture test strategy and module contract tests |
 | 34 notification types | Outbox, notification model, queue catalogue and provider ports |
-| 52 screens/routes | First-party web over versioned application API |
+| 52 screens/routes | First-party web over versioned application API and shared shadcn design system |
 | Non-functional requirements | ADRs, threat model, deployment/recovery and test strategy |
 
 No screen or client is allowed to bypass the API/domain transaction boundary.
@@ -44,10 +45,10 @@ No notification is allowed to determine booking truth.
 | Gate | Result | Evidence |
 |---|---|---|
 | Context and quality attributes stated | Pass | Architecture foundations and NFRs |
-| Alternatives compared | Pass | ADR-001–012 |
+| Alternatives compared | Pass | ADR-001–013 |
 | Solo-developer operational cost included | Pass | ADR-006, ADR-009, provider cost strategy |
 | Migration/reversal seams documented | Pass | Every provider/tool ADR and exit runbooks |
-| Decisions recorded | Pass | ADR index and D-036–D-048 |
+| Decisions recorded | Pass | ADR index and D-036–D-049 |
 | Specifications/test requirements traceable | Pass | This review and test strategy |
 
 ## Design proofs carried into Phase 4
@@ -67,6 +68,8 @@ The design is complete; these executable proofs are Phase 4 engineering gates:
    prohibited data is absent.
 7. Provider restore reconciles known booking, payment, audit, and report totals.
 8. Dhaka end-to-end measurements validate or replace the provisional region.
+9. The shadcn/Base UI foundation proves shared theming, keyboard interaction,
+   accessibility, responsive behavior, and independent domain-state display.
 
 Failure of a proof changes implementation or supersedes an ADR. It does not
 silently weaken the requirement.

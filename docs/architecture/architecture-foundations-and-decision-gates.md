@@ -130,6 +130,7 @@ These decisions are approved and recorded in the ADR collection.
 | K. Cache | Redis-compatible cache only for measured read/rate-limit needs | Improves speed without owning truth | System remains correct during cache loss |
 | L. Observability | OpenTelemetry/structured logs to Better Stack | Vendor portability and one-console solo operation | Sampling, privacy, retention, and cost controls apply |
 | M. Deployment | DigitalOcean App Platform + managed data in Bangalore, gated by measurements; Render Singapore fallback | Portability, low expected Bangladesh latency, lower operational burden | Provider must pass latency, restore, compatibility, and cost gates |
+| N. Frontend design system | shadcn/ui on Base UI, owned in `packages/ui` | Consistent accessible primitives with full application control | Upstream code is reviewed; product accessibility still requires testing |
 
 ## Why PostgreSQL is central
 
@@ -280,6 +281,9 @@ delivery-test candidate and BulkSMS.BD as fallback.
   and exits are recorded in
   [Technology and provider selection](technology-and-provider-selection.md) and
   [Provider cost, growth, and exit strategy](provider-cost-and-exit-strategy.md).
+- shadcn/ui on Base UI is the accepted first-party web component foundation;
+  [Frontend design-system architecture](frontend-design-system.md) controls
+  tokens, component ownership, accessibility, and update governance.
 
 ## Primary technical references
 

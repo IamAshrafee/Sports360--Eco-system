@@ -28,6 +28,22 @@ inputs.
 | Recovery/operations | Backup restore, deployment/migration/alerts/runbooks | Isolated infrastructure drill |
 | Accessibility/browser | WCAG core tasks, responsive and supported browser behavior | Automated + manual task review |
 
+## Frontend design-system tests
+
+The shared shadcn/Base UI foundation adds:
+
+- component interaction tests for keyboard, focus, labels, error association,
+  disabled/loading behavior, and state announcements;
+- automated accessibility checks on shared examples and core routes;
+- responsive checks from 320 CSS px through desktop operational layouts;
+- visual regression for tokens and high-risk shared product components;
+- manual keyboard and screen-reader walkthroughs for Today and public booking;
+- independent booking, payment, verification, and attendance state-display
+  combinations.
+
+Primitive-library accessibility is an input, not evidence that a composed
+screen satisfies NFR-UX-001.
+
 ## Fixture strategy
 
 Reuse all six synthetic venue archetypes:

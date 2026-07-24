@@ -38,6 +38,7 @@ before the product has users.
 15. [Technology and provider selection](technology-and-provider-selection.md)
 16. [Provider cost, growth, and exit strategy](provider-cost-and-exit-strategy.md)
 17. [Phase 3 traceability and gate review](phase-3-traceability-and-gate-review.md)
+18. [Frontend design-system architecture](frontend-design-system.md)
 
 ## Working sequence
 
@@ -83,12 +84,13 @@ An architecture choice becomes final only when:
 
 ## Completion record
 
-- 12 accepted architecture decisions
+- 13 accepted architecture decisions
 - PostgreSQL-enforced capacity, tenancy, money, time, audit, and idempotency
   designs
 - Separate web/API/worker modular-monolith topology
 - Versioned API strategy for web, future mobile, embeds, and integrations
 - Authentication, queue, notifications, observability, repository, and
   provisional cloud selections
+- shadcn/ui frontend design-system foundation and component governance
 - Three cost envelopes plus provider exit runbooks
 - Executable Phase 4 proof list and full Phase 3 gate review

@@ -136,11 +136,12 @@ Exit conditions:
 
 Phase 3 completion record:
 
-- 12 Architecture Decision Records
+- 13 Architecture Decision Records
 - Domain aggregates, state machines, logical data model, and module contracts
 - PostgreSQL-enforced capacity and defense-in-depth tenant isolation
 - API-first contract strategy for web and post-MVP clients/integrations
 - Authentication, queue, provider, observability, and repository selections
+- shadcn/ui frontend design-system architecture and accessibility governance
 - Threat model, test strategy, cost envelopes, recovery and provider exits
 - Traceability/gate review with executable Phase 4 proof list
 
@@ -151,11 +152,13 @@ Status: Next
 Work:
 
 1. Create repository/application structure.
-2. Configure development, CI, code quality, and test tooling.
-3. Implement identity, tenant, membership, and authorization.
-4. Implement audit and platform-administration foundations.
-5. Add database migrations, seed/demo data, and environment management.
-6. Configure error reporting, structured logging, backup, and restore process.
+2. Establish the shadcn/ui shared package, semantic tokens, component
+   conventions, and accessibility test foundation.
+3. Configure development, CI, code quality, and test tooling.
+4. Implement identity, tenant, membership, and authorization.
+5. Implement audit and platform-administration foundations.
+6. Add database migrations, seed/demo data, and environment management.
+7. Configure error reporting, structured logging, backup, and restore process.
 
 Exit conditions:
 

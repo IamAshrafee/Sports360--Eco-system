@@ -81,6 +81,7 @@ assumption has been validated.
 - [Technology and provider selection](architecture/technology-and-provider-selection.md)
 - [Provider cost, growth, and exit strategy](architecture/provider-cost-and-exit-strategy.md)
 - [Phase 3 traceability and gate review](architecture/phase-3-traceability-and-gate-review.md)
+- [Frontend design-system architecture](architecture/frontend-design-system.md)
 
 ## How to change the plan
 
